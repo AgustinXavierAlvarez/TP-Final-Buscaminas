@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscaminas</title>
+    <link rel="stylesheet" href="../public/css/styles.css">
+    <link rel="stylesheet" href="../public/css/medias.css">
+</head>
+<body>
+    <header>
+        <h1>Buscaminas</h1>
+        <nav>
+            <ul >
+                <li><a href="../public/html/instructions.html">Instrucciones</a></li>
+                <li><a href="../public/html/scores.html">Puntajes</a></li>
+                <li style="display: none;"><a href="../public/html/pause.html">Pausa</a></li>
+            </ul>
+    </header>
+    <main>
+        <div class="saludo" >
+            <p>Bienvenido al juego Buscaminas.</p>
+            <p>Haz clic en el botón de abajo para comenzar.</p>
+            <button id="start-game">Comenzar Juego</button>
+        </div>
+        <div class="niveles-container" >
+            <h1>Niveles</h1>
+            <div class="niveles">
+                <button class="btn-lvl">Fácil</button>
+                <button class="btn-lvl">Medio</button>
+                <button class="btn-lvl">Difícil</button>
+            </div>
+            <button id="exit-game">Salir</button>
+        </div>
+        <div id="tablero" class="">
+    
+        </div>
+    </main>
+    <footer>
+        <p>&copy;A.Alvarez TP-Final-Buscaminas. Todos los derechos reservados.</p>
+    </footer>
+    <script src="../public/js/game.js"></script>
+</body>
+</html>

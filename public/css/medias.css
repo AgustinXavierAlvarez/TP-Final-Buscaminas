@@ -1,0 +1,27 @@
+/* Tablet */
+@media (min-width: 600px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+    .saludo {
+        max-width: 500px;
+        padding: 2.5rem 2rem;
+    }
+    .saludo p {
+        font-size: 1.25rem;
+    }
+}
+
+/* Monitor/Escritorio */
+@media (min-width: 900px) {
+    body {
+        background-size: contain;
+    }
+    .saludo {
+        max-width: 600px;
+        padding: 3rem 2.5rem;
+    }
+    header h1 {
+        font-size: 3rem;
+    }
+}

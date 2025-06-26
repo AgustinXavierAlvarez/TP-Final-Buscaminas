@@ -1,0 +1,165 @@
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-image: url("https://i.pinimg.com/736x/72/fe/b5/72feb58c63d76f93867f059da3412cae.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+}
+
+header {
+    text-align: center;
+    padding: 1.2rem 0 0.5rem 0;
+    background: rgba(255,255,255,0.65);
+    border-bottom: 1px solid #b2d8b2;
+}
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+header h1 {
+    margin: 0;
+    font-size:25px;
+    letter-spacing: 2px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.saludo {
+    width: 100%;
+    max-width: 400px;
+    min-width: 350px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 14px;
+    padding: 2rem 1.2rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    text-align: center;
+    max-width: 95vw;
+}
+
+
+.saludo p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: #222;
+}
+
+#start-game {
+    font-size: 1.1rem;
+    padding: 0.7rem 1.5rem;
+    border-radius: 12px;
+    border: none;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#start-game:hover {
+    background: #e0ffe0;
+}
+
+.niveles-container {
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 14px;
+    padding: 2rem 1.2rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    text-align: center;
+    max-width: 95vw;
+}
+
+.niveles{
+    display: flex;
+    gap: 15px;
+}
+
+#tablero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.fila {
+    display: flex;
+}
+
+.celda {
+    width: 32px;
+    height: 32px;
+    margin: 2px;
+    background: #58ac8b;
+    border: 1px solid #0d500d;
+    border-radius: 4px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.celda:active {
+    background: #236d23;
+}
+
+.celda.descubierta {
+    background: #eae09b;
+    color: #222;
+    font-weight: bold;
+    border: 1.5px solid #836031;
+}
+
+.celda.descubierta[data-num="1"] {
+     color: #1976d2; 
+}
+
+.celda.descubierta[data-num="2"] {
+    color: #388e3c;
+}
+
+.celda.descubierta[data-num="3"] {
+    color: #d32f2f;
+}
+
+.celda.descubierta[data-num="4"] {
+    color: #7b1fa2;
+}
+
+.celda.bomba {
+    background: #ffb3b3;
+    color: #b30000;
+}
+
+footer {
+    text-align: center;
+    padding: 5px 0;
+    background: rgba(255,255,255,0.65);
+    font-size:7px;
+    border-top: 1px solid #b2d8b2;
+}
+
+.hidden-block{
+    display: none;
+}
+
+.visualize-block {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: all 0.3s ease-in-out;
+}
