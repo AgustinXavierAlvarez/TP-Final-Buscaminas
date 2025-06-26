@@ -1,6 +1,6 @@
 # TP-Final-Buscaminas
 ## Primer commit del proyecto, 26/06 
-Se agrega:
+### Se agrega:
 -Estilos y un poco de diseño al juego 
 -Inicio del juego 
 -Se agrega instancia para elegir niveles y opcion de retorno en caso de no jugar.
