@@ -34,6 +34,7 @@ btnJugar.addEventListener('click', function() {
 
 btnSalir.addEventListener('click', function() {
     saludo.classList.remove('hidden-block');
+    saludo.classList.add('visualize-block');
     niveles.classList.add('hidden-block');
 });
 
@@ -107,11 +108,8 @@ function pedirDatosJugador(informacion) {
 
 function guardarPuntaje(nivel, documento, nombre, puntaje) {
     let datos = JSON.parse(localStorage.getItem('puntajes')) || { facil: [], medio: [], dificil: [] };
-
-    // Busca si ya existe ese documento en el nivel
     let idx = datos[nivel].findIndex(p => p.documento === documento);
     if (idx !== -1) {
-        // Si el nuevo puntaje es mayor, actualiza
         if (puntaje > datos[nivel][idx].puntaje) {
             datos[nivel][idx].puntaje = puntaje;
             datos[nivel][idx].nombre = nombre;
@@ -119,18 +117,14 @@ function guardarPuntaje(nivel, documento, nombre, puntaje) {
     } else {
         datos[nivel].push({ documento, nombre, puntaje });
     }
-
-    // Ordena y deja solo top 5
     datos[nivel].sort((a, b) => b.puntaje - a.puntaje);
     datos[nivel] = datos[nivel].slice(0, 5);
-
     localStorage.setItem('puntajes', JSON.stringify(datos));
 }
 
 function obtenerTopGlobal() {
     let datos = JSON.parse(localStorage.getItem('puntajes')) || { facil: [], medio: [], dificil: [] };
     let global = {};
-
     ['facil', 'medio', 'dificil'].forEach(nivel => {
         datos[nivel].forEach(p => {
             if (!global[p.documento]) {
@@ -139,8 +133,6 @@ function obtenerTopGlobal() {
             global[p.documento].puntaje += p.puntaje;
         });
     });
-
-    // Convierte a array y ordena
     let topGlobal = Object.values(global).sort((a, b) => b.puntaje - a.puntaje).slice(0, 5);
     return topGlobal;
 }
