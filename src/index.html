@@ -16,6 +16,8 @@
                 <li><a href="../public/html/scores.html">Puntajes</a></li>
                 <li style="display: none;"><a href="../public/html/pause.html">Pausa</a></li>
             </ul>
+        </nav>
+
     </header>
     <main>
         <div class="saludo" >
@@ -32,8 +34,26 @@
             </div>
             <button id="exit-game">Salir</button>
         </div>
-        <div id="tablero" class="">
-    
+        <div id="puntajes-container">
+            <h1>Puntajes</h1>
+            <div class="puntajes">
+                <button class="btn-puntaje">Top 5 Global</button>
+                <button class="btn-puntaje">Top 5 Fácil</button>
+                <button class="btn-puntaje">Top 5 Medio</button>
+                <button class="btn-puntaje">Top 5 Difícil</button>
+            </div>
+            <button id="btn-puntajes-back">Volver</button>
+        </div>
+        <div id="tabla-puntajes">
+
+        </div>
+        <div class="tablero-container">
+            <div class="head-tablero">
+                <div id="temporizador" class="temporizador">Tiempo: 00s</div>
+                <div id="puntaje" class="puntaje">Puntaje: 000</div>
+            </div>
+            <div id="tablero" class=""></div>
+            <button id="reiniciar-juego">Reiniciar Juego</button>
         </div>
     </main>
     <footer>
