@@ -10,12 +10,16 @@
     .saludo p {
         font-size: 1.25rem;
     }
+    footer{
+        font-size: 10px;
+    }
 }
 
 /* Monitor/Escritorio */
 @media (min-width: 900px) {
     body {
-        background-size: contain;
+        background-image: url("../img/download.jpg");
+        background-size: cover;
     }
     .saludo {
         max-width: 600px;
@@ -24,4 +28,8 @@
     header h1 {
         font-size: 3rem;
     }
+    footer {
+         font-size: 14px;
+    }
 }
+

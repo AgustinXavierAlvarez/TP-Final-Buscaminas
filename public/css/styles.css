@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Arial, sans-serif;
-    background-image: url("https://i.pinimg.com/736x/72/fe/b5/72feb58c63d76f93867f059da3412cae.jpg");
+    background-image: url("../img/download\(4\).jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size:cover;
@@ -14,7 +14,7 @@ body {
 
 header {
     text-align: center;
-    padding: 1.2rem 0 0.5rem 0;
+    padding: 19px 0 8px 0;
     background: rgba(255,255,255,0.65);
     border-bottom: 1px solid #b2d8b2;
 }
@@ -43,22 +43,21 @@ main {
     min-width: 350px;
     background: rgba(255,255,255,0.92);
     border-radius: 14px;
-    padding: 2rem 1.2rem;
+    padding: 32px 19px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     text-align: center;
     max-width: 95vw;
 }
 
-
 .saludo p {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
+    font-size: 18px;
+    margin-bottom: 24px;
     color: #222;
 }
 
 #start-game {
-    font-size: 1.1rem;
-    padding: 0.7rem 1.5rem;
+    font-size: 18px;
+    padding: 11px 24px;
     border-radius: 12px;
     border: none;
     background: #fff;
@@ -80,10 +79,21 @@ main {
     gap: 15px;
     background: rgba(255,255,255,0.92);
     border-radius: 14px;
-    padding: 2rem 1.2rem;
+    padding: 25px 15px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     text-align: center;
     max-width: 95vw;
+}
+
+.niveles-container div button {
+    font-size:14px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
 .niveles{
@@ -95,7 +105,35 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 1rem;
+    margin-top: 16px;
+}
+
+.tablero-container{
+    background-color: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    padding: 20px 30px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:20px
+}
+
+button[id='reiniciar-juego']{
+    font-size:14px;
+    padding: 10px 20px;
+    margin: 0 30px;
+    border-radius: 12px;
+    border: none;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button[id='reiniciar-juego']:hover {
+    background: #e0ffe0;
+    transform: translateY(-2px);
 }
 
 .fila {
@@ -103,13 +141,13 @@ main {
 }
 
 .celda {
-    width: 32px;
-    height: 32px;
-    margin: 2px;
+    width: 40px;
+    height: 40px;
+    margin:3px;
     background: #58ac8b;
     border: 1px solid #0d500d;
     border-radius: 4px;
-    font-size: 10px;
+    font-size: 15px;
     cursor: pointer;
     transition: background 0.2s;
 }
@@ -145,14 +183,6 @@ main {
     color: #b30000;
 }
 
-footer {
-    text-align: center;
-    padding: 5px 0;
-    background: rgba(255,255,255,0.65);
-    font-size:7px;
-    border-top: 1px solid #b2d8b2;
-}
-
 .hidden-block{
     display: none;
 }
@@ -162,4 +192,12 @@ footer {
     flex-direction: column;
     gap: 5px;
     transition: all 0.3s ease-in-out;
+}
+
+footer {
+    text-align: center;
+    padding: 5px 0;
+    background: rgba(255,255,255,0.65);
+    font-size:7px;
+    border-top: 1px solid #b2d8b2;
 }
