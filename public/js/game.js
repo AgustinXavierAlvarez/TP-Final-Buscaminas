@@ -1,15 +1,16 @@
 var saludo = document.querySelector('.saludo');
 var niveles = document.querySelector('.niveles-container');
 var btnJugar = document.querySelector('#start-game');
-var btnSalir = document.querySelector('#exit-game');
+var btnSalir = document.getElementsByClassName('exit-game');
 var btnNiveles = document.getElementsByClassName('btn-lvl');
 var tableroContainer = document.getElementsByClassName('tablero-container');
 var tablero = document.querySelector('#tablero');
 var btnReiniciar = document.querySelector('#reiniciar-juego');
 var temporizador = document.querySelector('#temporizador');
 var btnReiniciar = document.querySelector('#reiniciar-juego');
-var btnPuntajes = document.querySelector('.btn-puntaje');
-var containerPuntaje = document.querySelector('#puntajes-container');
+var btnPuntaje = document.querySelector('#btn-puntaje');
+var btnPuntajes = document.querySelector('.btn-puntajes');
+var containerPuntaje = document.querySelector('.puntajes-container');
 var contPuntaje = 0;
 let matrizJuego;
 let visitado;
@@ -22,8 +23,14 @@ let juegoTerminado = false;
 document.addEventListener('DOMContentLoaded', function() {
     saludo.classList.add('visualize-block');
     niveles.classList.add('hidden-block');
-    tableroContainer[0].classList.add('hidden-block');
     containerPuntaje.classList.add('hidden-block');
+    tableroContainer[0].classList.add('hidden-block');
+});
+
+btnPuntaje.addEventListener('click', function() {
+    saludo.classList.add('hidden-block');
+    saludo.classList.remove('visualize-block');
+    containerPuntaje.classList.remove('hidden-block');
 });
 
 btnJugar.addEventListener('click', function() {
@@ -32,10 +39,16 @@ btnJugar.addEventListener('click', function() {
     niveles.classList.remove('hidden-block');
 });
 
-btnSalir.addEventListener('click', function() {
+btnSalir[0].addEventListener('click', function() {
     saludo.classList.remove('hidden-block');
     saludo.classList.add('visualize-block');
     niveles.classList.add('hidden-block');
+});
+
+btnSalir[1].addEventListener('click', function() {
+    saludo.classList.remove('hidden-block');
+    saludo.classList.add('visualize-block');
+    containerPuntaje.classList.add('hidden-block');
 });
 
 btnReiniciar.addEventListener('click', function() {
