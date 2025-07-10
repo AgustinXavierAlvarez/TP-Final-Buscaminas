@@ -52,9 +52,15 @@ btnSalir[1].addEventListener('click', function() {
 });
 
 btnReiniciar.addEventListener('click', function() {
+    if (!juegoTerminado) {
+        let confirmar = confirm("¿Estás seguro de que quieres reiniciar el juego? Perderás los puntos de esta partida.");
+        if (!confirmar) return;
+    }
     if (contPuntaje > 0 && !juegoTerminado) {
         let confirmar = confirm("Si reinicias ahora, perderás los puntos de esta partida. ¿Quieres guardar tu puntaje antes de reiniciar?");
         if (confirmar) {
+            detenerTemporizador();
+            juegoTerminado = true;
             pedirDatosJugador(function(documento, nombre) {
                 let nivel = '';
                 if (matrizJuego.length === 6) nivel = 'facil';
@@ -62,10 +68,10 @@ btnReiniciar.addEventListener('click', function() {
                 else if (matrizJuego.length === 10) nivel = 'dificil';
                 guardarPuntaje(nivel, documento, nombre, contPuntaje);
                 alert("¡Puntaje guardado!");
-                // Ahora sí, reinicia el juego
+                mostrarTodasLasBombas();
                 reiniciarJuego();
             });
-            return; // Espera a que termine el guardado
+            return; 
         }
     }
     reiniciarJuego();
@@ -178,8 +184,8 @@ function verificarVictoria() {
             alert('¡Felicidades! Ganaste el juego.');
         }, 100);
         detenerTemporizador();
+        juegoTerminado = true;
         pedirDatosJugador(function(documento, nombre) {
-        // Detecta el nivel actual según el tamaño del tablero
             let nivel = '';
             if (matrizJuego.length === 6) nivel = 'facil';
             else if (matrizJuego.length === 8) nivel = 'medio';
@@ -188,7 +194,6 @@ function verificarVictoria() {
             alert('¡Felicidades! Ganaste el juego.');
         });
         document.querySelectorAll('.celda').forEach(btn => btn.disabled = true);
-        juegoTerminado = true;
     }
 }
 
@@ -313,7 +318,6 @@ function crearTablero(filas, columnas, bombas = 10) {
                     celda.classList.add('bomba');
                     alert('¡Perdiste! Pisaste una bomba.');
                     pedirDatosJugador(function(documento, nombre) {
-                        // Detecta el nivel actual según el tamaño del tablero
                         let nivel = '';
                         if (matrizJuego.length === 6) nivel = 'facil';
                         else if (matrizJuego.length === 8) nivel = 'medio';
