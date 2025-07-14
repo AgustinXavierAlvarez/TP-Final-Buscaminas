@@ -53,7 +53,7 @@ btnSalir[1].addEventListener('click', function() {
 
 btnReiniciar.addEventListener('click', function() {
     if (!juegoTerminado) {
-        let confirmar = confirm("¿Estás seguro de que quieres reiniciar el juego? Perderás los puntos de esta partida.");
+        let confirmar = confirm("¿Estás seguro de que quieres reiniciar el juego?");
         if (!confirmar) return;
     }
     if (contPuntaje > 0 && !juegoTerminado) {
