@@ -3,15 +3,15 @@ var niveles = document.querySelector('.niveles-container');
 var btnJugar = document.querySelector('#start-game');
 var btnSalir = document.getElementsByClassName('exit-game');
 var btnNiveles = document.getElementsByClassName('btn-lvl');
-var tableroContainer = document.getElementsByClassName('tablero-container');
+var tableroContainer = document.querySelector('.tablero-container');
 var tablero = document.querySelector('#tablero');
+var instrucciones = document.querySelector('#instrucciones');
+var btnInstrucciones = document.querySelector('#btn-instrucciones');
 var btnReiniciar = document.querySelector('#reiniciar-juego');
 var temporizador = document.querySelector('#temporizador');
 var btnReiniciar = document.querySelector('#reiniciar-juego');
-var btnPuntaje = document.querySelector('#btn-puntaje');
-var btnPuntajes = document.querySelector('.btn-puntajes');
 var containerPuntaje = document.querySelector('.puntajes-container');
-var contPuntaje = 0;
+var contadorBanderas = document.querySelector('#banderas-restantes');
 let matrizJuego;
 let visitado;
 let tiempo = 0;
@@ -20,35 +20,47 @@ let temporizadorActivo = false;
 let primerClick = true;
 let juegoTerminado = false;
 
+
 document.addEventListener('DOMContentLoaded', function() {
-    saludo.classList.add('visualize-block');
     niveles.classList.add('hidden-block');
-    containerPuntaje.classList.add('hidden-block');
-    tableroContainer[0].classList.add('hidden-block');
+    tableroContainer.classList.add('hidden-block');
+    instrucciones.classList.add('hidden-block');
+    if (containerPuntaje) containerPuntaje.classList.add('hidden-block');
+    saludo.classList.add('visualize-block');
 });
-
-btnPuntaje.addEventListener('click', function() {
-    saludo.classList.add('hidden-block');
-    saludo.classList.remove('visualize-block');
-    containerPuntaje.classList.remove('hidden-block');
-});
-
 btnJugar.addEventListener('click', function() {
-    saludo.classList.remove('visualize-block');
-    saludo.classList.add('hidden-block');
-    niveles.classList.remove('hidden-block');
+    saludo.classList.toggle('hidden-block');
+    saludo.classList.toggle('visualize-block');
+    niveles.classList.toggle('hidden-block');
+    niveles.classList.toggle('visualize-block');
+});
+
+btnInstrucciones.addEventListener('click', function() {
+    saludo.classList.toggle('hidden-block');
+    saludo.classList.toggle('visualize-block');
+    instrucciones.classList.toggle('hidden-block');
+    instrucciones.classList.toggle('visualize-block');
 });
 
 btnSalir[0].addEventListener('click', function() {
-    saludo.classList.remove('hidden-block');
-    saludo.classList.add('visualize-block');
-    niveles.classList.add('hidden-block');
+    niveles.classList.toggle('hidden-block');
+    niveles.classList.toggle('visualize-block');
+    saludo.classList.toggle('hidden-block');
+    saludo.classList.toggle('visualize-block');
 });
 
 btnSalir[1].addEventListener('click', function() {
-    saludo.classList.remove('hidden-block');
-    saludo.classList.add('visualize-block');
-    containerPuntaje.classList.add('hidden-block');
+    containerPuntaje.classList.toggle('hidden-block');
+    containerPuntaje.classList.toggle('visualize-block');
+    saludo.classList.toggle('hidden-block');
+    saludo.classList.toggle('visualize-block');
+});
+
+btnSalir[2].addEventListener('click', function() {
+    instrucciones.classList.toggle('hidden-block');
+    instrucciones.classList.toggle('visualize-block');
+    saludo.classList.toggle('hidden-block');
+    saludo.classList.toggle('visualize-block');
 });
 
 btnReiniciar.addEventListener('click', function() {
@@ -56,115 +68,55 @@ btnReiniciar.addEventListener('click', function() {
         let confirmar = confirm("¿Estás seguro de que quieres reiniciar el juego?");
         if (!confirmar) return;
     }
-    if (contPuntaje > 0 && !juegoTerminado) {
-        let confirmar = confirm("Si reinicias ahora, perderás los puntos de esta partida. ¿Quieres guardar tu puntaje antes de reiniciar?");
-        if (confirmar) {
-            detenerTemporizador();
-            juegoTerminado = true;
-            pedirDatosJugador(function(documento, nombre) {
-                let nivel = '';
-                if (matrizJuego.length === 6) nivel = 'facil';
-                else if (matrizJuego.length === 8) nivel = 'medio';
-                else if (matrizJuego.length === 10) nivel = 'dificil';
-                guardarPuntaje(nivel, documento, nombre, contPuntaje);
-                alert("¡Puntaje guardado!");
-                mostrarTodasLasBombas();
-                reiniciarJuego();
-            });
-            return; 
-        }
-    }
     reiniciarJuego();
 });
 
 function reiniciarJuego() {
     juegoTerminado = false;
-    contPuntaje = 0;
     niveles.classList.remove('hidden-block');
-    tableroContainer[0].classList.add('hidden-block');
+    niveles.classList.add('visualize-block');
+    tableroContainer.classList.remove('visualize-block');
+    tableroContainer.classList.add('hidden-block');
     tablero.innerHTML = '';
-    temporizador.textContent = 'Tiempo: 00s';
-    actualizarPuntaje();
+    temporizador.textContent = '000';
     detenerTemporizador();
 }
 
 btnNiveles[0].addEventListener('click', function() {
     crearTablero(6, 6, 7);
-    niveles.classList.add('hidden-block');
-    tableroContainer[0].classList.remove('hidden-block');
+    niveles.classList.toggle('hidden-block');
+    niveles.classList.toggle('visualize-block');
+    tableroContainer.classList.toggle('hidden-block');
+    tableroContainer.classList.toggle('visualize-block');
 });
 
 btnNiveles[1].addEventListener('click', function() {
     crearTablero(8, 8, 10);
-    niveles.classList.add('hidden-block');
-    tableroContainer[0].classList.remove('hidden-block');
+    niveles.classList.toggle('hidden-block');
+    niveles.classList.toggle('visualize-block');
+    tableroContainer.classList.toggle('hidden-block');
+    tableroContainer.classList.toggle('visualize-block');
+
 });
 
 btnNiveles[2].addEventListener('click', function() {
-    crearTablero(10, 10, 20);
-    niveles.classList.add('hidden-block');
-    tableroContainer[0].classList.remove('hidden-block');
+    crearTablero(10, 10, 15);
+    niveles.classList.toggle('hidden-block');
+    niveles.classList.toggle('visualize-block');
+    tableroContainer.classList.toggle('hidden-block');
+    tableroContainer.classList.toggle('visualize-block');
+
 });
-
-function actualizarPuntaje() {
-    puntaje.textContent = `Puntaje: ${contPuntaje < 10 ? '00' : ''}${contPuntaje}`;
-}
-
-function pedirDatosJugador(informacion) {
-    let documento = prompt("Ingrese su número de documento:");
-    let nombre = prompt("Ingrese su nombre:");
-    if (documento && nombre) {
-        informacion(documento, nombre);
-    }else {
-        let confirmar = confirm("No ingresaste nombre o documento. Si continúas, ¡PERDERÁS los puntos de esta partida!\n¿Estás seguro de que no quieres guardar tu puntaje?");
-        if (!confirmar) {
-            pedirDatosJugador(informacion);
-        } else {
-            alert("Tus puntos NO serán guardados.");
-        }
-    }
-}
-
-function guardarPuntaje(nivel, documento, nombre, puntaje) {
-    let datos = JSON.parse(localStorage.getItem('puntajes')) || { facil: [], medio: [], dificil: [] };
-    let idx = datos[nivel].findIndex(p => p.documento === documento);
-    if (idx !== -1) {
-        if (puntaje > datos[nivel][idx].puntaje) {
-            datos[nivel][idx].puntaje = puntaje;
-            datos[nivel][idx].nombre = nombre;
-        }
-    } else {
-        datos[nivel].push({ documento, nombre, puntaje });
-    }
-    datos[nivel].sort((a, b) => b.puntaje - a.puntaje);
-    datos[nivel] = datos[nivel].slice(0, 5);
-    localStorage.setItem('puntajes', JSON.stringify(datos));
-}
-
-function obtenerTopGlobal() {
-    let datos = JSON.parse(localStorage.getItem('puntajes')) || { facil: [], medio: [], dificil: [] };
-    let global = {};
-    ['facil', 'medio', 'dificil'].forEach(nivel => {
-        datos[nivel].forEach(p => {
-            if (!global[p.documento]) {
-                global[p.documento] = { documento: p.documento, nombre: p.nombre, puntaje: 0 };
-            }
-            global[p.documento].puntaje += p.puntaje;
-        });
-    });
-    let topGlobal = Object.values(global).sort((a, b) => b.puntaje - a.puntaje).slice(0, 5);
-    return topGlobal;
-}
 
 
 function iniciarTemporizador() {
     if (temporizadorActivo) return;
     temporizadorActivo = true;
     tiempo = 0;
-    temporizador.textContent = 'Tiempo: 00s';
+    temporizador.textContent = '000';
     intervaloTemporizador = setInterval(() => {
         tiempo++;
-        temporizador.textContent = tiempo < 10 ? `Tiempo: 0${tiempo} s` : `Tiempo: ${tiempo} s`;
+        temporizador.textContent = tiempo < 10 ? `00${tiempo}` : `${tiempo}`;
     }, 1000);
 }
 
@@ -185,14 +137,6 @@ function verificarVictoria() {
         }, 100);
         detenerTemporizador();
         juegoTerminado = true;
-        pedirDatosJugador(function(documento, nombre) {
-            let nivel = '';
-            if (matrizJuego.length === 6) nivel = 'facil';
-            else if (matrizJuego.length === 8) nivel = 'medio';
-            else if (matrizJuego.length === 10) nivel = 'dificil';
-            guardarPuntaje(nivel, documento, nombre, contPuntaje);
-            alert('¡Felicidades! Ganaste el juego.');
-        });
         document.querySelectorAll('.celda').forEach(btn => btn.disabled = true);
     }
 }
@@ -246,10 +190,6 @@ function liberarEspacio(matriz, visitado, fila, columna) {
         let bombasAlrededor = contarBombasAlrededor(matriz, f, c);
         let celda = document.querySelector(`.celda[data-fila="${f}"][data-columna="${c}"]`);
         celda.disabled = true;
-        if (!celda.classList.contains('descubierta')) {
-            contPuntaje += 20;
-            actualizarPuntaje();
-        }
         celda.classList.add('descubierta');
         verificarVictoria();
         if (bombasAlrededor > 0) {
@@ -317,13 +257,6 @@ function crearTablero(filas, columnas, bombas = 10) {
                     celda.textContent = '💣';
                     celda.classList.add('bomba');
                     alert('¡Perdiste! Pisaste una bomba.');
-                    pedirDatosJugador(function(documento, nombre) {
-                        let nivel = '';
-                        if (matrizJuego.length === 6) nivel = 'facil';
-                        else if (matrizJuego.length === 8) nivel = 'medio';
-                        else if (matrizJuego.length === 10) nivel = 'dificil';
-                        guardarPuntaje(nivel, documento, nombre, contPuntaje);
-                    });
                     detenerTemporizador();
                     mostrarTodasLasBombas();
                     document.querySelectorAll('.celda').forEach(btn => btn.disabled = true);

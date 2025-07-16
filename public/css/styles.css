@@ -9,7 +9,7 @@ body {
     background-image: url("../img/download\(4\).jpg");
     background-repeat: no-repeat;
     background-position: center;
-    background-size:cover;
+    background-size:contain;
 }
 
 header {
@@ -45,48 +45,57 @@ main {
     width: 100%;
     max-width: 400px;
     min-width: 350px;
-    background: rgba(255,255,255,0.92);
+    background: #c0c0c0;
     border-radius: 14px;
     padding: 32px 19px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     text-align: center;
-    max-width: 95vw;
 }
 
 .saludo p {
+     font-weight: 700;
     font-size: 18px;
     margin-bottom: 24px;
     color: #222;
 }
 
 .btn-juego {
+    min-width: 200px;
+    font-weight: 700;
     font-size: 18px;
     padding: 11px 24px;
     border-radius: 12px;
     border: none;
-    background: #fff;
+    background: #c7c7c7;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     cursor: pointer;
     transition: background 0.2s;
 }
 
 .btn-juego:hover {
-    background: #e0ffe0;
+    background: #cccccc;
 }
 
 .niveles-container {
-    min-width: 400px;
+    min-width: 350px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     gap: 15px;
-    background: rgba(255,255,255,0.92);
+    background-color:#c0c0c0;
     border-radius: 14px;
     padding: 25px 15px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     text-align: center;
-    max-width: 95vw;
+    max-width:1100px;
+}
+.niveles{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
 }
 
 .exit-game {
@@ -104,14 +113,11 @@ main {
     background: rgba(107, 61, 61, 0.8) !important;
 }
 
-.niveles{
-    display: flex;
-    gap: 15px;
-}
+
 
 .puntajes-container{
     min-width: 400px;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
@@ -124,31 +130,85 @@ main {
     max-width: 1000px;
 }
 
-#tablero {
-    display: flex;
+.instructions-container {
+    min-width: 400px;
+    font-weight: 700;
+    display: none;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    margin-top: 16px;
+    gap: 15px;
+    background-color: #c0c0c0;
+    border-radius: 14px;
+    padding: 25px 15px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    text-align: center;
+    max-width: 95vw;
+}
+.instructions-container>p{
+    font-size: 16px;
+    color: #333;
+    margin: 10px 0;
+    width: 700px;
 }
 
-.tablero-container{
-    background-color: rgba(255, 255, 255, 0.65);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    padding: 20px 30px;
-    border-radius: 25px;
+.head-tablero {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #bdbdbd;
+    border: 2px solid #7b7b7b;
+    padding: 8px 16px;
+    margin-bottom: 10px;
+}
+
+.display {
+    background: #222;
+    color: #ff2222;
+    font-family: 'Digital-7', monospace, 'Courier New', Courier, monospace;
+    font-size: 32px;
+    padding: 2px 12px;
+    border-radius: 4px;
+    border: 2px inset #7b7b7b;
+    min-width: 60px;
+    text-align: right;
+    letter-spacing: 2px;
+}
+
+#tablero {
+    display: flex;
+    width: min-content;
+    margin-top: 16px;
+    background: #bdbdbd;
     flex-direction: column;
-    justify-content: center;
-    gap:20px
+    border-top: 3px #7b7b7b solid;
+    border-left: 3px #7b7b7b solid;
+    border-right: 3px #cbcbcb solid;
+    border-bottom: 3px #cbcbcb solid;
+}
+
+.tablero-container {
+    display: none;
+    background: #bdbdbd;
+    align-items: center;
+    border-right: 3px solid #7b7b7b;
+    border-bottom: 3px solid #7b7b7b;
+    border-left: 3px solid #cbcbcb;
+    border-top: 3px solid #cbcbcb;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 20px 20px 15px 20px;
+    margin-top: 30px;
+    
 }
 
 #reiniciar-juego {
-    font-size:14px;
-    padding: 10px 20px;
-    margin: 0 30px;
-    border-radius: 12px;
+    font-size:24px;
+    padding: auto;
+    margin: 0 auto;
+    border-radius: 50%;
     border: none;
-    background: #fff;
+    background: #c1c1c1;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     cursor: pointer;
     transition: background 0.2s;
@@ -162,27 +222,26 @@ button[id='reiniciar-juego']:hover {
 .fila {
     display: flex;
 }
-
 .celda {
-    width: 40px;
-    height: 40px;
-    margin:3px;
-    background: #58ac8b;
-    border: 1px solid #0d500d;
-    border-radius: 4px;
-    font-size: 15px;
+    padding: 0%;
+    width: 30px;
+    height: 30px;
+    background: #c0c0c0;
+    border: 2px solid #fff;
+    border-bottom: 2px solid #7b7b7b;
+    border-right: 2px solid #7b7b7b;
+    font-size: 20px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-weight: bold;
+    box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #7b7b7b;
     cursor: pointer;
-    transition: background 0.2s;
-}
-.celda:active {
-    background: #236d23;
+    transition: none;
 }
 
-.celda.descubierta {
-    background: #eae09b;
-    color: #222;
-    font-weight: bold;
-    border: 1.5px solid #836031;
+.celda:active, .celda.descubierta {
+    background: #bdbdbd;
+    border: 2px solid #7b7b7b;
+    box-shadow: none;
 }
 
 .celda.descubierta[data-num="1"] {
@@ -213,6 +272,7 @@ button[id='reiniciar-juego']:hover {
 .visualize-block {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
     transition: all 0.3s ease-in-out;
 }

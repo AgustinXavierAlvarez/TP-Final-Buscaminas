@@ -16,7 +16,7 @@
             <p>Bienvenido al juego Buscaminas.</p>
             <p>Haz clic en el botón de abajo para comenzar.</p>
             <button id="start-game" class="btn-juego">Comenzar Juego</button>
-            <button id="instructions" class="btn-juego">Instrucciones</button>
+            <button id="btn-instrucciones" class="btn-juego">Instrucciones</button>
             <button id="btn-puntaje" class="btn-juego">Puntajes</button>
         </div>
         <div class="niveles-container" >
@@ -38,16 +38,23 @@
             </div>
             <button class="exit-game">Volver</button>
         </div>
-        <div id="tabla-puntajes">
-
+        <div id="tabla-puntajes">    
+        </div>
+        <div id="instrucciones" class="instructions-container">
+            <h1>Instrucciones</h1>
+            <p>El juego consiste en despejar todas las casillas de una pantalla que no oculten una mina.</p>
+            <p>Algunas casillas tienen un número, este número indica las minas que son en todas las casillas circundantes. Así, si una casilla tiene el número 3, significa que de las ocho casillas que hay alrededor (si no es en una esquina o borde) hay 3 con minas y 5 sin minas. Si se descubre una casilla sin número indica que ninguna de las casillas vecinas tiene mina y estas se descubren automáticamente.</p>
+            <p>Si se descubre una casilla con una mina se pierde la partida.</p>
+            <p>Se puede poner una marca en las casillas que el jugador piensa que hay minas para ayudar a descubrir la que están cerca.</p>
+            <button class="exit-game">Volver</button>
         </div>
         <div class="tablero-container">
             <div class="head-tablero">
-                <div id="temporizador" class="temporizador">Tiempo: 00s</div>
-                <div id="puntaje" class="puntaje">Puntaje: 000</div>
+                <div id="minas-restantes" class="display">000</div>
+                <a id="reiniciar-juego">😊</a>
+                <div id="temporizador" class="display">000</div>
             </div>
             <div id="tablero" class=""></div>
-            <button id="reiniciar-juego">Reiniciar Juego</button>
         </div>
     </main>
     <footer>
