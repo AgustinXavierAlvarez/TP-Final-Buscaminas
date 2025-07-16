@@ -11,10 +11,13 @@ var btnReiniciar = document.querySelector('#reiniciar-juego');
 var temporizador = document.querySelector('#temporizador');
 var btnReiniciar = document.querySelector('#reiniciar-juego');
 var containerPuntaje = document.querySelector('.puntajes-container');
-var contadorBanderas = document.querySelector('#banderas-restantes');
+var contadorBanderas = document.querySelector('#minas-restantes');
+var exitCross = document.querySelector('#exit-cross');
+var modeByw = document.querySelector('#mode-byw');
 let matrizJuego;
 let visitado;
 let tiempo = 0;
+var contBanderas= 0;
 let intervaloTemporizador = null;
 let temporizadorActivo = false;
 let primerClick = true;
@@ -22,45 +25,45 @@ let juegoTerminado = false;
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    niveles.classList.add('hidden-block');
-    tableroContainer.classList.add('hidden-block');
-    instrucciones.classList.add('hidden-block');
-    if (containerPuntaje) containerPuntaje.classList.add('hidden-block');
-    saludo.classList.add('visualize-block');
-});
-btnJugar.addEventListener('click', function() {
-    saludo.classList.toggle('hidden-block');
     saludo.classList.toggle('visualize-block');
-    niveles.classList.toggle('hidden-block');
+});
+
+modeByw.addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    modeByw.textContent = document.body.classList.contains('dark-mode') ? '🌞' : '🌙';
+});
+
+btnJugar.addEventListener('click', function() {
+    saludo.classList.toggle('visualize-block');
     niveles.classList.toggle('visualize-block');
 });
 
 btnInstrucciones.addEventListener('click', function() {
-    saludo.classList.toggle('hidden-block');
     saludo.classList.toggle('visualize-block');
-    instrucciones.classList.toggle('hidden-block');
     instrucciones.classList.toggle('visualize-block');
 });
 
 btnSalir[0].addEventListener('click', function() {
-    niveles.classList.toggle('hidden-block');
     niveles.classList.toggle('visualize-block');
-    saludo.classList.toggle('hidden-block');
     saludo.classList.toggle('visualize-block');
 });
 
 btnSalir[1].addEventListener('click', function() {
-    containerPuntaje.classList.toggle('hidden-block');
     containerPuntaje.classList.toggle('visualize-block');
-    saludo.classList.toggle('hidden-block');
     saludo.classList.toggle('visualize-block');
 });
 
 btnSalir[2].addEventListener('click', function() {
-    instrucciones.classList.toggle('hidden-block');
     instrucciones.classList.toggle('visualize-block');
-    saludo.classList.toggle('hidden-block');
     saludo.classList.toggle('visualize-block');
+});
+
+exitCross.addEventListener('click', function() {
+    let confirmar = confirm("¿Estás seguro de que quieres salir del juego?");
+    if (confirmar) {
+        reiniciarJuego()
+    }
+
 });
 
 btnReiniciar.addEventListener('click', function() {
@@ -73,37 +76,33 @@ btnReiniciar.addEventListener('click', function() {
 
 function reiniciarJuego() {
     juegoTerminado = false;
-    niveles.classList.remove('hidden-block');
     niveles.classList.add('visualize-block');
     tableroContainer.classList.remove('visualize-block');
-    tableroContainer.classList.add('hidden-block');
     tablero.innerHTML = '';
+    btnReiniciar.innerHTML = '😊';
     temporizador.textContent = '000';
     detenerTemporizador();
 }
 
 btnNiveles[0].addEventListener('click', function() {
     crearTablero(6, 6, 7);
-    niveles.classList.toggle('hidden-block');
     niveles.classList.toggle('visualize-block');
-    tableroContainer.classList.toggle('hidden-block');
+    exitCross.style.left = '122px';
     tableroContainer.classList.toggle('visualize-block');
 });
 
 btnNiveles[1].addEventListener('click', function() {
     crearTablero(8, 8, 10);
-    niveles.classList.toggle('hidden-block');
     niveles.classList.toggle('visualize-block');
-    tableroContainer.classList.toggle('hidden-block');
+    exitCross.style.left = '129px';
     tableroContainer.classList.toggle('visualize-block');
 
 });
 
 btnNiveles[2].addEventListener('click', function() {
-    crearTablero(10, 10, 15);
-    niveles.classList.toggle('hidden-block');
+    crearTablero(10, 10, 16);
     niveles.classList.toggle('visualize-block');
-    tableroContainer.classList.toggle('hidden-block');
+    exitCross.style.left = '159px';
     tableroContainer.classList.toggle('visualize-block');
 
 });
@@ -116,7 +115,7 @@ function iniciarTemporizador() {
     temporizador.textContent = '000';
     intervaloTemporizador = setInterval(() => {
         tiempo++;
-        temporizador.textContent = tiempo < 10 ? `00${tiempo}` : `${tiempo}`;
+        temporizador.textContent = tiempo < 10 ? `00${tiempo}` : tiempo > 99 ? `${tiempo}`:`0${tiempo}`;
     }, 1000);
 }
 
@@ -126,6 +125,9 @@ function detenerTemporizador() {
     temporizadorActivo = false;
 }
 
+function guardarPuntaje(tiempo) {
+    let puntajes = JSON.parse(localStorage.getItem('puntajes')) || [];  
+}
 
 function verificarVictoria() {
     let totalCeldas = matrizJuego.length * matrizJuego[0].length;
@@ -135,8 +137,10 @@ function verificarVictoria() {
         setTimeout(() => {
             alert('¡Felicidades! Ganaste el juego.');
         }, 100);
+        btnReiniciar.innerHTML = '🥳';
         detenerTemporizador();
         juegoTerminado = true;
+        guardarPuntaje(tiempo);
         document.querySelectorAll('.celda').forEach(btn => btn.disabled = true);
     }
 }
@@ -193,6 +197,10 @@ function liberarEspacio(matriz, visitado, fila, columna) {
         celda.classList.add('descubierta');
         verificarVictoria();
         if (bombasAlrededor > 0) {
+            if (celda.textContent === '🚩') {
+                    contBanderas++;
+                    contadorBanderas.textContent = contBanderas < 10? contBanderas<0? contBanderas <= (-10)? `${contBanderas}`:`0${contBanderas}`: `00${contBanderas}` :`0${contBanderas}`;  
+            }
             celda.textContent = bombasAlrededor;
             celda.setAttribute('data-num', bombasAlrededor);
         } else {
@@ -226,6 +234,8 @@ function crearTablero(filas, columnas, bombas = 10) {
     matrizJuego = generarMatriz(filas, columnas, bombas);
     visitado = Array.from({length: filas}, () => Array(columnas).fill(false));
     tablero.innerHTML = '';
+    contBanderas = bombas;
+    contadorBanderas.textContent = contBanderas < 10?`00${contBanderas}` :`0${contBanderas}`;
     for (let i = 0; i < filas; i++) {
         const fila = document.createElement('div');
         fila.classList.add('fila');
@@ -236,11 +246,21 @@ function crearTablero(filas, columnas, bombas = 10) {
                 e.preventDefault();
                 if (!celda.disabled) {
                     if (celda.textContent === '🚩') {
+                        contBanderas++;
+                        contadorBanderas.textContent =contBanderas < 10? contBanderas<0? contBanderas <= (-10)? `${contBanderas}`:`0${contBanderas}`: `00${contBanderas}` :`0${contBanderas}`;
                         celda.textContent = '';
                     } else if (celda.textContent === '') {
+                        contBanderas--;
+                        contadorBanderas.textContent = contBanderas < 10? contBanderas<0? contBanderas <= (-10)? `${contBanderas}`:`0${contBanderas}`: `00${contBanderas}` :`0${contBanderas}`;
                         celda.textContent = '🚩';
                     }
                 }
+            });
+            celda.addEventListener('mousedown', function(e) {
+                btnReiniciar.innerHTML = '😮';
+            });
+            celda.addEventListener('mouseup', function(e) {
+                btnReiniciar.innerHTML = '😊';
             });
             celda.addEventListener('click', function() {
                 if (juegoTerminado) return;
@@ -254,11 +274,12 @@ function crearTablero(filas, columnas, bombas = 10) {
                     }
                 }
                 if (matrizJuego[i][j] === 'B') {
+                    btnReiniciar.innerHTML = '🤯';
                     celda.textContent = '💣';
                     celda.classList.add('bomba');
-                    alert('¡Perdiste! Pisaste una bomba.');
                     detenerTemporizador();
                     mostrarTodasLasBombas();
+                    alert('¡Perdiste! Pisaste una bomba.');
                     document.querySelectorAll('.celda').forEach(btn => btn.disabled = true);
                     juegoTerminado = true;
                 }else {

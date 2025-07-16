@@ -6,10 +6,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Arial, sans-serif;
-    background-image: url("../img/download\(4\).jpg");
+    background-image: url("../img/Lumia\ old\ Microsoft\ Windows.jpg");
     background-repeat: no-repeat;
     background-position: center;
-    background-size:contain;
+    background-size:cover;
 }
 
 header {
@@ -18,16 +18,55 @@ header {
     background: rgba(255,255,255,0.65);
     border-bottom: 1px solid #b2d8b2;
 }
-header nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
 
 header h1 {
     margin: 0;
     font-size:25px;
     letter-spacing: 2px;
+}
+
+header > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#git-access {
+    color: #333;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+    background-color: #fee;
+    height: 30px;
+    width: 50px;
+    border-radius: 5px;
+    border-right: 2px solid #7b7b7b;
+    border-bottom: 2px solid #7b7b7b;
+    border-top: 2px solid #cbcbcb;
+    border-left: 2px solid #cbcbcb;
+}
+
+#mode-byw{
+    background-color:#fee;
+    cursor: pointer;
+    font-size: 20px;
+    height: 30px;
+    width: 50px;
+    border-radius: 5px;
+    border-right: 2px solid #7b7b7b;
+    border-bottom: 2px solid #7b7b7b;
+    border-top: 2px solid #cbcbcb;
+    border-left: 2px solid #cbcbcb;
+    transition: background 0.2s;
 }
 
 main {
@@ -38,7 +77,7 @@ main {
 }
 
 .saludo {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -78,7 +117,7 @@ main {
 
 .niveles-container {
     min-width: 350px;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
@@ -114,7 +153,6 @@ main {
 }
 
 
-
 .puntajes-container{
     min-width: 400px;
     display: none;
@@ -131,7 +169,8 @@ main {
 }
 
 .instructions-container {
-    min-width: 400px;
+    min-width: 350px;
+    width: 70%;
     font-weight: 700;
     display: none;
     flex-direction: column;
@@ -149,7 +188,23 @@ main {
     font-size: 16px;
     color: #333;
     margin: 10px 0;
-    width: 700px;
+    width: auto;
+}
+
+#exit-cross {
+    position: relative;
+    bottom: 20px;
+    left: 122px;
+    display: flex;
+    color: #fff;
+    cursor: pointer;
+    transition: color 0.2s;
+    width: 25px;
+    height: 25px;
+    background-color: #ff0000;
+    justify-content: center;
+    border-left: 3px solid #cbcbcb;
+    border-bottom: 3px solid #7b7b7b;
 }
 
 .head-tablero {
@@ -158,8 +213,8 @@ main {
     align-items: center;
     background: #bdbdbd;
     border: 2px solid #7b7b7b;
-    padding: 8px 16px;
-    margin-bottom: 10px;
+    padding-top: 10px;
+    gap: 10px;
 }
 
 .display {
@@ -168,7 +223,6 @@ main {
     font-family: 'Digital-7', monospace, 'Courier New', Courier, monospace;
     font-size: 32px;
     padding: 2px 12px;
-    border-radius: 4px;
     border: 2px inset #7b7b7b;
     min-width: 60px;
     text-align: right;
@@ -265,9 +319,6 @@ button[id='reiniciar-juego']:hover {
     color: #b30000;
 }
 
-.hidden-block{
-    display: none;
-}
 
 .visualize-block {
     display: flex;

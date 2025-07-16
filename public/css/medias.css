@@ -1,5 +1,10 @@
 /* Tablet */
 @media (min-width: 600px) {
+    body{
+        background-image: url("../img/Lumia\ old\ Microsoft\ Windows.jpg");
+        background-size: cover;
+        background-position: center bottom;
+    }
     header h1 {
         font-size: 2.5rem;
     }
@@ -20,6 +25,7 @@
     body {
         background-image: url("../img/download.jpg");
         background-size:cover;
+        background-position: center;
     }
     .saludo {
         max-width: 600px;

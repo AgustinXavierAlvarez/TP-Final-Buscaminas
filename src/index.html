@@ -9,7 +9,13 @@
 </head>
 <body>
     <header>
-        <h1>Buscaminas</h1>
+        <div>
+            <h1>Buscaminas</h1>
+            <div class="header-icons">
+                <span id="mode-byw" >🌞</span>
+                <a href="https://github.com/AgustinXavierAlvarez/TP-Final-Buscaminas" id="git-access" target="_blank" ><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
     </header>
     <main>
         <div class="saludo" >
@@ -18,6 +24,7 @@
             <button id="start-game" class="btn-juego">Comenzar Juego</button>
             <button id="btn-instrucciones" class="btn-juego">Instrucciones</button>
             <button id="btn-puntaje" class="btn-juego">Puntajes</button>
+            <button id="btn-contacto" class="btn-juego">Contacto</button>
         </div>
         <div class="niveles-container" >
             <h1>Niveles</h1>
@@ -49,10 +56,11 @@
             <button class="exit-game">Volver</button>
         </div>
         <div class="tablero-container">
+            <span id="exit-cross" > x </span>
             <div class="head-tablero">
-                <div id="minas-restantes" class="display">000</div>
-                <a id="reiniciar-juego">😊</a>
-                <div id="temporizador" class="display">000</div>
+                <span id="minas-restantes" class="display">000</span>
+                <span id="reiniciar-juego">😊</span>
+                <span id="temporizador" class="display">000</span>
             </div>
             <div id="tablero" class=""></div>
         </div>
@@ -60,6 +68,7 @@
     <footer>
         <p>&copy;A.Alvarez TP-Final-Buscaminas. Todos los derechos reservados.</p>
     </footer>
+    <script src="https://kit.fontawesome.com/7a0a501500.js" crossorigin="anonymous"></script>
     <script src="../public/js/game.js"></script>
 </body>
 </html>
