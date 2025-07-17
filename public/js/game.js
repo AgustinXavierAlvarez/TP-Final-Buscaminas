@@ -1,4 +1,8 @@
 var saludo = document.querySelector('.saludo');
+var header = document.querySelector('.header');
+var headTablero = document.querySelector('.head-tablero');
+var footer = document.querySelector('.footer');
+var btns= document.querySelectorAll('.btn-juego');
 var niveles = document.querySelector('.niveles-container');
 var btnJugar = document.querySelector('#start-game');
 var btnSalir = document.getElementsByClassName('exit-game');
@@ -13,7 +17,7 @@ var btnReiniciar = document.querySelector('#reiniciar-juego');
 var containerPuntaje = document.querySelector('.puntajes-container');
 var contadorBanderas = document.querySelector('#minas-restantes');
 var exitCross = document.querySelector('#exit-cross');
-var modeByw = document.querySelector('#mode-byw');
+var modeByw = document.querySelector('.mode-byw');
 let matrizJuego;
 let visitado;
 let tiempo = 0;
@@ -21,6 +25,7 @@ var contBanderas= 0;
 let intervaloTemporizador = null;
 let temporizadorActivo = false;
 let primerClick = true;
+var refByw = false;
 let juegoTerminado = false;
 
 
@@ -28,9 +33,34 @@ document.addEventListener('DOMContentLoaded', function() {
     saludo.classList.toggle('visualize-block');
 });
 
-modeByw.addEventListener('click', function() {
+modeByw.addEventListener('click', function() { 
+    let celdas = document.querySelectorAll('.celda');
+    celdas.forEach(celda => {  
+        celda.classList.toggle('dark-mode-celda');
+    });
     document.body.classList.toggle('dark-mode');
-    modeByw.textContent = document.body.classList.contains('dark-mode') ? '🌞' : '🌙';
+    header.classList.toggle('dark-mode');
+    footer.classList.toggle('dark-mode');
+    saludo.classList.toggle('dark-mode');
+    niveles.classList.toggle('dark-mode');
+    btns.forEach(btn => btn.classList.toggle('dark-mode-button'));
+    instrucciones.classList.toggle('dark-mode');
+    tableroContainer.classList.toggle('dark-mode-tablero');
+    tablero.classList.toggle('dark-mode');
+    headTablero.classList.toggle('dark-mode');
+    if(tablero.classList.contains('dark-mode')) {
+        tablero.style.borderTop='3px #3f3f3f solid';
+        tablero.style.borderLeft='3px #3f3f3f solid';
+    }else{
+        tablero.style.borderTop='3px #5b5b5b solid';
+        tablero.style.borderLeft='3px #5b5b5b solid';
+    }
+    containerPuntaje.classList.toggle('dark-mode');
+    if(modeByw.textContent === '🌙') {
+        refByw = true;
+    }
+    modeByw.classList.toggle('dark-mode-button');
+    modeByw.textContent = document.body.classList.contains('dark-mode') ? '🌙' : '🌞';
 });
 
 btnJugar.addEventListener('click', function() {
@@ -287,9 +317,20 @@ function crearTablero(filas, columnas, bombas = 10) {
                 }
             });
             celda.classList.add('celda');
+           
+
             celda.dataset.fila = i;
             celda.dataset.columna = j;
             fila.appendChild(celda);
+             if (tableroContainer.classList.contains('dark-mode-tablero')) {
+                celda.classList.add('dark-mode-celda');
+                celda.style.borderBottom = '3px #3f3f3f solid';
+                celda.style.borderRight = '3px #3f3f3f solid';
+            }else {
+                celda.classList.remove('dark-mode-celda');
+                celda.style.borderBottom = '2px #5b5b5b solid';
+                celda.style.borderRight = '2px #5b5b5b solid';
+            }
         }
         tablero.appendChild(fila);
     }

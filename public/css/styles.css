@@ -15,8 +15,7 @@ body {
 header {
     text-align: center;
     padding: 19px 0 8px 0;
-    background: rgba(255,255,255,0.65);
-    border-bottom: 1px solid #b2d8b2;
+    background: #fee;
 }
 
 header h1 {
@@ -55,8 +54,14 @@ header > div {
     border-left: 2px solid #cbcbcb;
 }
 
-#mode-byw{
-    background-color:#fee;
+#git-access:hover {
+    color: #fff;
+    background-color: #333;
+    transition: background 0.2s;
+}
+
+.mode-byw{
+    background-color:rgb(171, 227, 255);
     cursor: pointer;
     font-size: 20px;
     height: 30px;
@@ -67,6 +72,11 @@ header > div {
     border-top: 2px solid #cbcbcb;
     border-left: 2px solid #cbcbcb;
     transition: background 0.2s;
+}
+
+.mode-byw:hover {
+    position: relative;
+    bottom: 5px;
 }
 
 main {
@@ -89,14 +99,12 @@ main {
     padding: 32px 19px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     text-align: center;
-}
-
-.saludo p {
-     font-weight: 700;
+    font-weight: 700;
     font-size: 18px;
     margin-bottom: 24px;
     color: #222;
 }
+
 
 .btn-juego {
     min-width: 200px;
@@ -182,11 +190,12 @@ main {
     padding: 25px 15px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     text-align: center;
+    font-size: 16px;
+    color: #333;
     max-width: 95vw;
 }
 .instructions-container>p{
-    font-size: 16px;
-    color: #333;
+
     margin: 10px 0;
     width: auto;
 }
@@ -203,8 +212,8 @@ main {
     height: 25px;
     background-color: #ff0000;
     justify-content: center;
-    border-left: 3px solid #cbcbcb;
-    border-bottom: 3px solid #7b7b7b;
+    border-left: 3px solid #efefef;
+    border-bottom: 3px solid #5b5b5b;
 }
 
 .head-tablero {
@@ -212,7 +221,7 @@ main {
     justify-content: space-between;
     align-items: center;
     background: #bdbdbd;
-    border: 2px solid #7b7b7b;
+    border: 2px solid #5b5b5b;
     padding-top: 10px;
     gap: 10px;
 }
@@ -223,7 +232,7 @@ main {
     font-family: 'Digital-7', monospace, 'Courier New', Courier, monospace;
     font-size: 32px;
     padding: 2px 12px;
-    border: 2px inset #7b7b7b;
+    border: 2px inset #5b5b5b;
     min-width: 60px;
     text-align: right;
     letter-spacing: 2px;
@@ -233,22 +242,22 @@ main {
     display: flex;
     width: min-content;
     margin-top: 16px;
-    background: #bdbdbd;
+    background: #c7c7c7;
     flex-direction: column;
-    border-top: 3px #7b7b7b solid;
-    border-left: 3px #7b7b7b solid;
-    border-right: 3px #cbcbcb solid;
-    border-bottom: 3px #cbcbcb solid;
+    border-top: 3px #5b5b5b solid;
+    border-left: 3px #5b5b5b solid;
+    border-right: 3px #efefef solid;
+    border-bottom: 3px #efefef solid;
 }
 
 .tablero-container {
     display: none;
-    background: #bdbdbd;
+    background: #c7c7c7;
     align-items: center;
-    border-right: 3px solid #7b7b7b;
-    border-bottom: 3px solid #7b7b7b;
-    border-left: 3px solid #cbcbcb;
-    border-top: 3px solid #cbcbcb;
+    border-right: 3px solid #5b5b5b;
+    border-bottom: 3px solid #5b5b5b;
+    border-left: 3px solid #fcfcfc;
+    border-top: 3px solid #fcfcfc;
     border-radius: 0;
     box-shadow: none;
     padding: 20px 20px 15px 20px;
@@ -280,10 +289,12 @@ button[id='reiniciar-juego']:hover {
     padding: 0%;
     width: 30px;
     height: 30px;
-    background: #c0c0c0;
+    background-color: #c0c0c0;
     border: 2px solid #fff;
-    border-bottom: 2px solid #7b7b7b;
-    border-right: 2px solid #7b7b7b;
+    border-bottom: 2px solid #5b5b5b;
+    border-right: 2px solid #5b5b5b;
+    border-left: 2px solid #efefef;
+    border-top: 2px solid #efefef;
     font-size: 20px;
     font-family: 'Segoe UI', Arial, sans-serif;
     font-weight: bold;
@@ -294,7 +305,10 @@ button[id='reiniciar-juego']:hover {
 
 .celda:active, .celda.descubierta {
     background: #bdbdbd;
-    border: 2px solid #7b7b7b;
+    border-bottom: 2px solid #3b3b3b;
+    border-right: 2px solid #3b3b3b;
+    border-left: 3px solid #efefef;
+    border-top: 3px solid #efefef;
     box-shadow: none;
 }
 
@@ -328,10 +342,39 @@ button[id='reiniciar-juego']:hover {
     transition: all 0.3s ease-in-out;
 }
 
+.dark-mode {
+    background-color: #333;
+    color: #fff;
+    transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
+}
+
+.dark-mode-tablero {
+    background-color: #555;
+    color: #fff !important;
+    border-top: 3px #efefef solid;
+    border-left: 3px #efefef solid;
+    border-right: 3px #3f3f3f solid;
+    border-bottom: 3px #3f3f3f solid;
+    transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
+}   
+
+.dark-mode-button {
+    background-color: #777;
+    color: #fff;
+    border: 1px solid #444;
+    transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
+
+}
+.dark-mode-celda{
+    background-color: #777;
+    transition: background-color 0.3s ease-in-out, color 0.8s ease-in-out;
+}
+
+
+
 footer {
     text-align: center;
     padding: 5px 0;
-    background: rgba(255,255,255,0.65);
-    font-size:7px;
-    border-top: 1px solid #b2d8b2;
+    background: #fee;
+    font-size:10px;
 }
