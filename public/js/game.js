@@ -40,20 +40,29 @@ function alertFunction(type, message) {
     let alertMessage = document.createElement('p');
     var titulo = document.createElement('h1');
     var divModal = document.createElement('div');
+    divModal.innerHTML =`<div class="btns-modal"><button class="btn-juego btn-modal" id="btn-confirmar">Si</button><button class="btn-juego btn-modal" id="btn-denegar">No</button></div>`;
     alertModal.classList.add('visualize-block');
     divModal.classList.add('btns-modal');
     modelContent.innerHTML = '';
+    if (type == 'salir') {
+        titulo.textContent = 'Salir del juego';
+    }
     modelContent.appendChild(titulo);
     modelContent.appendChild(alertMessage);
     modelContent.appendChild(divModal);
-    if (type == 'salir') {
-        titulo.textContent = 'Salir del juego';
-        alertMessage.style.color = '#b30000';
-    }
-    divModal.innerHTML =`<div class="btns-modal"><button class="btn-juego btn-modal" id="btn-confirmar">Si</button><button class="btn-juego btn-modal" id="btn-denegar">No</button></div>`;
-    alertModal.appendChild(modelContent);
+    alertMessage.textContent = message;
     var btnConfirmar = document.querySelector('#btn-confirmar');
     var btnDenegar = document.querySelector('#btn-denegar');
+    if (modeByw.textContent === '🌙') {
+        alertMessage.style.color = '#fff !important';
+        btnConfirmar.classList.add('dark-mode-button');
+        btnDenegar.classList.add('dark-mode-button');
+    }else {
+        alertMessage.style.color = '#333 !important';
+        btnConfirmar.classList.remove('dark-mode-button');
+        btnDenegar.classList.remove('dark-mode-button');
+    }
+    alertModal.appendChild(modelContent);
     btnConfirmar.addEventListener('click', function() {
         alertModal.classList.remove('visualize-block');
         reiniciarJuego();
@@ -63,22 +72,20 @@ function alertFunction(type, message) {
         alertModal.classList.remove('visualize-block');
         reanudarTemporizador();
     });
-
-    alertMessage.textContent = message;
-  if (type === 'success') {
-        alertMessage.style.color = 'green';
-    } else {
-        alertMessage.style.color = '#222';
-    }
-
-    
 }
 
 modeByw.addEventListener('click', function() { 
+    var btnModal = document.querySelectorAll('.btn-modal') || [];
     let celdas = document.querySelectorAll('.celda');
     celdas.forEach(celda => {  
         celda.classList.toggle('dark-mode-celda');
     });
+    if (btnModal.length > 0) {
+        btnModal.forEach(btn => {
+            btn.classList.toggle('dark-mode-button');
+        });
+    }
+    
     document.body.classList.toggle('dark-mode');
     header.classList.toggle('dark-mode');
     footer.classList.toggle('dark-mode');
@@ -89,6 +96,8 @@ modeByw.addEventListener('click', function() {
     tableroContainer.classList.toggle('dark-mode-tablero');
     tablero.classList.toggle('dark-mode');
     headTablero.classList.toggle('dark-mode');
+    alertModal.classList.toggle('dark-mode-tablero');
+    divModal = document.querySelectorAll('.btn-modal');
     if(tablero.classList.contains('dark-mode')) {
         tablero.style.borderTop='3px #3f3f3f solid';
         exitCross.style.borderBottom='3px #3f3f3f solid';
@@ -99,11 +108,8 @@ modeByw.addEventListener('click', function() {
         tablero.style.borderLeft='3px #5b5b5b solid';
     }
     containerPuntaje.classList.toggle('dark-mode');
-    if(modeByw.textContent === '🌙') {
-        refByw = true;
-    }
     modeByw.classList.toggle('dark-mode-button');
-    modeByw.textContent = document.body.classList.contains('dark-mode') ? '🌙' : '🌞';
+    modeByw.textContent = this.classList.contains('dark-mode-button') ? '🌙' : '🌞';
 });
 
 btnJugar.addEventListener('click', function() {
@@ -134,8 +140,10 @@ btnSalir[2].addEventListener('click', function() {
 exitCross.addEventListener('click', function() {
     if (!juegoTerminado) {
         pausarTemporizador();
-        alertFunction('salir', '¿Estás seguro de que quieres salir?');
+        var alert = alertFunction('salir', '¿Estás seguro de que quieres salir?');
+        if (!alert) return;
     }
+    reiniciarJuego();
 });
 
 btnReiniciar.addEventListener('click', function() {
