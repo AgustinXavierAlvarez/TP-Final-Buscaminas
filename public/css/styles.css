@@ -57,6 +57,7 @@ header > div {
 #git-access:hover {
     color: #fff;
     background-color: #333;
+    transform: translateY(-5px);
     transition: background 0.2s;
 }
 
@@ -67,10 +68,10 @@ header > div {
     height: 30px;
     width: 50px;
     border-radius: 5px;
-    border-right: 2px solid #7b7b7b;
-    border-bottom: 2px solid #7b7b7b;
-    border-top: 2px solid #cbcbcb;
-    border-left: 2px solid #cbcbcb;
+    border-right: 2px solid #7b7b7b !important;
+    border-bottom: 2px solid #7b7b7b !important;
+    border-top: 2px solid #cbcbcb !important;
+    border-left: 2px solid #cbcbcb !important;
     transition: background 0.2s;
 }
 
@@ -94,7 +95,7 @@ main {
     width: 100%;
     max-width: 400px;
     min-width: 350px;
-    background: #c0c0c0;
+    background: #b0b0b0;
     border-radius: 14px;
     padding: 32px 19px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
@@ -103,6 +104,10 @@ main {
     font-size: 18px;
     margin-bottom: 24px;
     color: #222;
+    border-right: 2px solid #7b7b7b;
+    border-bottom: 2px solid #7b7b7b;
+    border-top: 2px solid #cbcbcb;
+    border-left: 2px solid #cbcbcb;
 }
 
 
@@ -116,11 +121,16 @@ main {
     background: #c7c7c7;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     cursor: pointer;
-    transition: background 0.2s;
+    border-right: 2px solid #7b7b7b;
+    border-bottom: 2px solid #7b7b7b;
+    border-top: 2px solid #cbcbcb;
+    border-left: 2px solid #cbcbcb;
 }
 
 .btn-juego:hover {
     background: #cccccc;
+    transition: background 0.2s;
+    transform: translateY(-2px);
 }
 
 .niveles-container {
@@ -130,12 +140,16 @@ main {
     justify-content: space-around;
     align-items: center;
     gap: 15px;
-    background-color:#c0c0c0;
+    background-color:#b0b0b0;
     border-radius: 14px;
     padding: 25px 15px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     text-align: center;
     max-width:1100px;
+    border-right: 2px solid #7b7b7b;
+    border-bottom: 2px solid #7b7b7b;
+    border-top: 2px solid #cbcbcb;
+    border-left: 2px solid #cbcbcb;
 }
 .niveles{
     display: flex;
@@ -214,6 +228,12 @@ main {
     justify-content: center;
     border-left: 3px solid #efefef;
     border-bottom: 3px solid #5b5b5b;
+}
+
+#exit-cross:hover {
+    color: #fff;
+    background-color: #b30000;
+    transition: background 0.2s;
 }
 
 .head-tablero {
@@ -304,12 +324,13 @@ button[id='reiniciar-juego']:hover {
 }
 
 .celda:active, .celda.descubierta {
-    background: #bdbdbd;
-    border-bottom: 2px solid #3b3b3b;
-    border-right: 2px solid #3b3b3b;
+    background: #adadad;
+    border-bottom: 3px solid #3b3b3b;
+    border-right: 3px solid #3b3b3b;
     border-left: 3px solid #efefef;
     border-top: 3px solid #efefef;
     box-shadow: none;
+    transition: background 0.4s, border 0.2s, box-shadow 0.2s;
 }
 
 .celda.descubierta[data-num="1"] {
@@ -333,6 +354,43 @@ button[id='reiniciar-juego']:hover {
     color: #b30000;
 }
 
+.modal-alert{
+    position:absolute;
+    width: 400px;
+    background: #b0b0b0;
+    border-radius: 14px;
+    color: #333;
+    padding:10px 5px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    z-index: 1000;
+    display: none;
+    transition: all 0.3s ease-in-out;
+    border-right: 2px solid #7b7b7b;
+    border-bottom: 2px solid #7b7b7b;
+    border-top: 2px solid #cbcbcb;
+    border-left: 2px solid #cbcbcb;
+}
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.btns-modal {
+  
+    display: flex;
+    gap: 15px;
+}
+
+.btn-modal{
+    min-width: 100px !important;
+    padding: 5px auto;
+}
+
+.modal-visible {
+    display: flex;
+}
 
 .visualize-block {
     display: flex;
@@ -359,7 +417,7 @@ button[id='reiniciar-juego']:hover {
 }   
 
 .dark-mode-button {
-    background-color: #777;
+    background-color: #666;
     color: #fff;
     border: 1px solid #444;
     transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;

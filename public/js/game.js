@@ -18,10 +18,12 @@ var containerPuntaje = document.querySelector('.puntajes-container');
 var contadorBanderas = document.querySelector('#minas-restantes');
 var exitCross = document.querySelector('#exit-cross');
 var modeByw = document.querySelector('.mode-byw');
+var alertModal = document.querySelector('#modal-alert');
 let matrizJuego;
 let visitado;
 let tiempo = 0;
 var contBanderas= 0;
+var renTemporizador = null;
 let intervaloTemporizador = null;
 let temporizadorActivo = false;
 let primerClick = true;
@@ -32,6 +34,45 @@ let juegoTerminado = false;
 document.addEventListener('DOMContentLoaded', function() {
     saludo.classList.toggle('visualize-block');
 });
+
+function alertFunction(type, message) {
+    var modelContent = document.querySelector('.modal-content')
+    let alertMessage = document.createElement('p');
+    var titulo = document.createElement('h1');
+    var divModal = document.createElement('div');
+    alertModal.classList.add('visualize-block');
+    divModal.classList.add('btns-modal');
+    modelContent.innerHTML = '';
+    modelContent.appendChild(titulo);
+    modelContent.appendChild(alertMessage);
+    modelContent.appendChild(divModal);
+    if (type == 'salir') {
+        titulo.textContent = 'Salir del juego';
+        alertMessage.style.color = '#b30000';
+    }
+    divModal.innerHTML =`<div class="btns-modal"><button class="btn-juego btn-modal" id="btn-confirmar">Si</button><button class="btn-juego btn-modal" id="btn-denegar">No</button></div>`;
+    alertModal.appendChild(modelContent);
+    var btnConfirmar = document.querySelector('#btn-confirmar');
+    var btnDenegar = document.querySelector('#btn-denegar');
+    btnConfirmar.addEventListener('click', function() {
+        alertModal.classList.remove('visualize-block');
+        reiniciarJuego();
+        return true;
+    });
+    btnDenegar.addEventListener('click', function() {
+        alertModal.classList.remove('visualize-block');
+        reanudarTemporizador();
+    });
+
+    alertMessage.textContent = message;
+  if (type === 'success') {
+        alertMessage.style.color = 'green';
+    } else {
+        alertMessage.style.color = '#222';
+    }
+
+    
+}
 
 modeByw.addEventListener('click', function() { 
     let celdas = document.querySelectorAll('.celda');
@@ -50,9 +91,11 @@ modeByw.addEventListener('click', function() {
     headTablero.classList.toggle('dark-mode');
     if(tablero.classList.contains('dark-mode')) {
         tablero.style.borderTop='3px #3f3f3f solid';
+        exitCross.style.borderBottom='3px #3f3f3f solid';
         tablero.style.borderLeft='3px #3f3f3f solid';
     }else{
         tablero.style.borderTop='3px #5b5b5b solid';
+        exitCross.style.borderBottom='3px #5b5b5b solid';
         tablero.style.borderLeft='3px #5b5b5b solid';
     }
     containerPuntaje.classList.toggle('dark-mode');
@@ -89,19 +132,20 @@ btnSalir[2].addEventListener('click', function() {
 });
 
 exitCross.addEventListener('click', function() {
-    let confirmar = confirm("¿Estás seguro de que quieres salir del juego?");
-    if (confirmar) {
-        reiniciarJuego()
+    if (!juegoTerminado) {
+        pausarTemporizador();
+        alertFunction('salir', '¿Estás seguro de que quieres salir?');
     }
-
 });
 
 btnReiniciar.addEventListener('click', function() {
     if (!juegoTerminado) {
-        let confirmar = confirm("¿Estás seguro de que quieres reiniciar el juego?");
-        if (!confirmar) return;
+        pausarTemporizador();
+        var alert = alertFunction('salir', '¿Estás seguro de que quieres salir?');
+        if (!alert) return;
     }
-    reiniciarJuego();
+    reiniciarJuego()
+
 });
 
 function reiniciarJuego() {
@@ -111,6 +155,8 @@ function reiniciarJuego() {
     tablero.innerHTML = '';
     btnReiniciar.innerHTML = '😊';
     temporizador.textContent = '000';
+    tiempo = 0;
+    contBanderas = 0;
     detenerTemporizador();
 }
 
@@ -141,8 +187,20 @@ btnNiveles[2].addEventListener('click', function() {
 function iniciarTemporizador() {
     if (temporizadorActivo) return;
     temporizadorActivo = true;
-    tiempo = 0;
-    temporizador.textContent = '000';
+    intervaloTemporizador = setInterval(() => {
+        tiempo++;
+        temporizador.textContent = tiempo < 10 ? `00${tiempo}` : tiempo > 99 ? `${tiempo}`:`0${tiempo}`;
+    }, 1000);
+}
+
+function pausarTemporizador() {
+    clearInterval(intervaloTemporizador);
+    temporizadorActivo = false;
+}
+
+function reanudarTemporizador() {
+    if (temporizadorActivo) return;
+    temporizadorActivo = true;
     intervaloTemporizador = setInterval(() => {
         tiempo++;
         temporizador.textContent = tiempo < 10 ? `00${tiempo}` : tiempo > 99 ? `${tiempo}`:`0${tiempo}`;
@@ -155,9 +213,7 @@ function detenerTemporizador() {
     temporizadorActivo = false;
 }
 
-function guardarPuntaje(tiempo) {
-    let puntajes = JSON.parse(localStorage.getItem('puntajes')) || [];  
-}
+
 
 function verificarVictoria() {
     let totalCeldas = matrizJuego.length * matrizJuego[0].length;
