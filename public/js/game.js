@@ -50,9 +50,7 @@ function alertFunction(type, message) {
     alertModal.classList.add('visualize-block');
     divModal.classList.add('btns-modal');
     modelContent.innerHTML = '';
-    if (type == 'salir') {
-        titulo.textContent = 'Salir del juego';
-    }
+   
     modelContent.appendChild(titulo);
     modelContent.appendChild(alertMessage);
     modelContent.appendChild(divModal);
@@ -69,15 +67,35 @@ function alertFunction(type, message) {
         btnDenegar.classList.remove('dark-mode-button');
     }
     alertModal.appendChild(modelContent);
-    btnConfirmar.addEventListener('click', function() {
-        alertModal.classList.remove('visualize-block');
-        type=='salir' ?reiniciarJuego():'';
-    });
     if (type == 'error') {
         titulo.textContent = 'Error';
+        alertMessage.style.color = '#ff0000';
+        btnDenegar.style.display = 'none';    
+        btnConfirmar.textContent = 'Aceptar';
+    } 
+    if (type == 'salir') {
+        titulo.textContent = 'Salir del juego';
     }
+    if (type == 'victoria') {
+        titulo.textContent = '¡¡Victoria!!';
+        alertMessage.style.color = '#333';
+    }
+    btnConfirmar.addEventListener('click', function() {
+        alertModal.classList.remove('visualize-block');
+        if (type == 'salir') {
+            reiniciarJuego();
+        }else if (type == 'error') {
+            return;
+        }else if (type == 'victoria') {
+            guardarPuntaje(contBanderas,tiempo)
+        }
+    });
+
     btnDenegar.addEventListener('click', function() {
         alertModal.classList.remove('visualize-block');
+        if (type == 'victoria') {
+            alertFunction('salir','¿Deseas salir del juego?')
+        }
         reanudarTemporizador();
     });
 }
@@ -142,12 +160,33 @@ btnContacto.addEventListener('click', function() {
 });
 
 btnForm.addEventListener('click', function(e) {
-    e.preventDefault(); 
-    var nombre = document.querySelector('#nombre').value;
-    var email = document.querySelector('#email').value;
-    var mensaje = document.querySelector('#mensaje').value;
+    e.preventDefault();
+    var nombre = document.querySelector('#nombre').value.trim();
+    var email = document.querySelector('#email').value.trim();
+    var mensaje = document.querySelector('#mensaje').value.trim();
     if (nombre === '' || email === '' || mensaje === '') {
         alertFunction('error', 'Por favor, completa todos los campos.');
+        return;
+    }
+    if (!/^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ ]+$/.test(nombre) || nombre.length < 3) {
+        alertFunction('error', 'El nombre debe ser alfanumérico y tener al menos 3 caracteres.');
+        return;
+    }
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+        alertFunction('error', 'Por favor, ingresa un email válido.');
+        return;
+    }
+    if (mensaje.length <= 5) {
+        alertFunction('error', 'El mensaje debe tener más de 5 caracteres.');
+        return;
+    }
+    var asunto = encodeURIComponent('Contacto desde Buscaminas');
+    var cuerpo = encodeURIComponent('Nombre: ' + nombre + '\nEmail: ' + email + '\nMensaje: ' + mensaje);
+    window.location.href = 'mailto:alvarezagustin@gmail.com?subject=' + asunto + '&body=' + cuerpo;
+    document.querySelector('#nombre').value = '';
+    document.querySelector('#email').value = '';
+    document.querySelector('#mensaje').value = '';
+})
 
 
 btnNiveles[0].addEventListener('click', function() {
@@ -264,15 +303,17 @@ function verificarVictoria() {
     let bombas = matrizJuego.flat().filter(x => x === 'B').length;
     let descubiertas = document.querySelectorAll('.celda.descubierta').length;
     if (descubiertas === totalCeldas - bombas) {
-        setTimeout(() => {
-            alert('¡Felicidades! Ganaste el juego.');
-        }, 100);
         btnReiniciar.innerHTML = '🥳';
         detenerTemporizador();
         juegoTerminado = true;
-        guardarPuntaje(tiempo);
         document.querySelectorAll('.celda').forEach(btn => btn.disabled = true);
+        alertFunction('victoria', '¡Felicidades! Ganaste el juego, ¿Deseas Guardar los puntos?.');
     }
+}
+
+function guardarPuntaje( bands , time ) {
+
+    
 }
 
 
