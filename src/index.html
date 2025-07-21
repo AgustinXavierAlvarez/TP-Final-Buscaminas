@@ -22,8 +22,8 @@
             <p>Bienvenido al juego Buscaminas.</p>
             <p>Haz clic en el botón de abajo para comenzar.</p>
             <button id="start-game" class="btn-juego">Comenzar Juego</button>
+            <button id="btn-puntajes" class="btn-juego">Puntajes</button>
             <button id="btn-instrucciones" class="btn-juego">Instrucciones</button>
-            <button id="btn-puntaje" class="btn-juego">Puntajes</button>
             <button id="btn-contacto" class="btn-juego">Contacto</button>
         </div>
         <div class="niveles-container" >
@@ -38,10 +38,10 @@
         <div class="puntajes-container">
             <h1>Puntajes</h1>
             <div class="puntajes">
-                <button class="btn-puntajes btn-juego">Top 5 Global</button>
-                <button class="btn-puntajes btn-juego">Top 5 Fácil</button>
-                <button class="btn-puntajes btn-juego">Top 5 Medio</button>
-                <button class="btn-puntajes btn-juego">Top 5 Difícil</button>
+                <button class="btn-puntaje btn-juego">Top 5 Global</button>
+                <button class="btn-puntaje btn-juego">Top 5 Fácil</button>
+                <button class="btn-puntaje btn-juego">Top 5 Medio</button>
+                <button class="btn-puntaje btn-juego">Top 5 Difícil</button>
             </div>
             <button class="exit-game">Volver</button>
         </div>
@@ -53,6 +53,29 @@
             <p>Algunas casillas tienen un número, este número indica las minas que son en todas las casillas circundantes. Así, si una casilla tiene el número 3, significa que de las ocho casillas que hay alrededor (si no es en una esquina o borde) hay 3 con minas y 5 sin minas. Si se descubre una casilla sin número indica que ninguna de las casillas vecinas tiene mina y estas se descubren automáticamente.</p>
             <p>Si se descubre una casilla con una mina se pierde la partida.</p>
             <p>Se puede poner una marca en las casillas que el jugador piensa que hay minas para ayudar a descubrir la que están cerca.</p>
+            <button class="exit-game">Volver</button>
+        </div>
+        <div id="contacto" class="contacto-container">
+            <h1>Contacto</h1>
+            <p>Para cualquier consulta o sugerencia, puedes contactarme a través de:</p>
+            <form action="post"  id="contacto-form"> >
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre">
+                    <span id="error-nombre" class="error"></span>
+                </div>
+                <div  class="form-group">
+                    <label for="email">Mail</label>
+                    <input type="text" id="email" name="email">
+                    <span id="error-email" class="error"></span>
+                </div>
+                <div  class="form-group">
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="mensaje"></textarea>
+                    <span id="error-mensaje" class="error"></span>
+                </div>
+                <button type="submit" id="btn-form" class="btn-juego">Enviar</button>                
+            </form>
             <button class="exit-game">Volver</button>
         </div>
         <div class="tablero-container">

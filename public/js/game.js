@@ -1,23 +1,29 @@
 var saludo = document.querySelector('.saludo');
 var header = document.querySelector('.header');
 var headTablero = document.querySelector('.head-tablero');
+var modeByw = document.querySelector('.mode-byw');
 var footer = document.querySelector('.footer');
 var btns= document.querySelectorAll('.btn-juego');
 var niveles = document.querySelector('.niveles-container');
 var btnJugar = document.querySelector('#start-game');
 var btnSalir = document.getElementsByClassName('exit-game');
 var btnNiveles = document.getElementsByClassName('btn-lvl');
+var btnInstrucciones = document.querySelector('#btn-instrucciones');
+var btnContacto = document.querySelector('#btn-contacto');
+var btnPuntajes = document.querySelector('#btn-puntajes');
+var btnsPuntajes = document.querySelectorAll('.btn-puntaje');
+var btnReiniciar = document.querySelector('#reiniciar-juego');
+var btnReiniciar = document.querySelector('#reiniciar-juego');
+var instrucciones = document.querySelector('#instrucciones');
+var contactoContainer = document.querySelector('.contacto-container');
+var formContacto = document.querySelector('#contacto-form');
+var btnForm= document.querySelector('#btn-form');
+var puntajesContainer = document.querySelector('.puntajes-container');
 var tableroContainer = document.querySelector('.tablero-container');
 var tablero = document.querySelector('#tablero');
-var instrucciones = document.querySelector('#instrucciones');
-var btnInstrucciones = document.querySelector('#btn-instrucciones');
-var btnReiniciar = document.querySelector('#reiniciar-juego');
 var temporizador = document.querySelector('#temporizador');
-var btnReiniciar = document.querySelector('#reiniciar-juego');
-var containerPuntaje = document.querySelector('.puntajes-container');
 var contadorBanderas = document.querySelector('#minas-restantes');
 var exitCross = document.querySelector('#exit-cross');
-var modeByw = document.querySelector('.mode-byw');
 var alertModal = document.querySelector('#modal-alert');
 let matrizJuego;
 let visitado;
@@ -65,9 +71,11 @@ function alertFunction(type, message) {
     alertModal.appendChild(modelContent);
     btnConfirmar.addEventListener('click', function() {
         alertModal.classList.remove('visualize-block');
-        reiniciarJuego();
-        return true;
+        type=='salir' ?reiniciarJuego():'';
     });
+    if (type == 'error') {
+        titulo.textContent = 'Error';
+    }
     btnDenegar.addEventListener('click', function() {
         alertModal.classList.remove('visualize-block');
         reanudarTemporizador();
@@ -77,6 +85,8 @@ function alertFunction(type, message) {
 modeByw.addEventListener('click', function() { 
     var btnModal = document.querySelectorAll('.btn-modal') || [];
     let celdas = document.querySelectorAll('.celda');
+    modeByw.classList.toggle('dark-mode-button');
+    modeByw.textContent = this.classList.contains('dark-mode-button') ? '🌙' : '🌞';
     celdas.forEach(celda => {  
         celda.classList.toggle('dark-mode-celda');
     });
@@ -85,18 +95,18 @@ modeByw.addEventListener('click', function() {
             btn.classList.toggle('dark-mode-button');
         });
     }
-    
-    document.body.classList.toggle('dark-mode');
     header.classList.toggle('dark-mode');
     footer.classList.toggle('dark-mode');
     saludo.classList.toggle('dark-mode');
     niveles.classList.toggle('dark-mode');
     btns.forEach(btn => btn.classList.toggle('dark-mode-button'));
     instrucciones.classList.toggle('dark-mode');
-    tableroContainer.classList.toggle('dark-mode-tablero');
+    contactoContainer.classList.toggle('dark-mode');
+    puntajesContainer.classList.toggle('dark-mode');
+    tableroContainer.classList.toggle('dark-mode');
     tablero.classList.toggle('dark-mode');
     headTablero.classList.toggle('dark-mode');
-    alertModal.classList.toggle('dark-mode-tablero');
+    alertModal.classList.toggle('dark-mode');
     divModal = document.querySelectorAll('.btn-modal');
     if(tablero.classList.contains('dark-mode')) {
         tablero.style.borderTop='3px #3f3f3f solid';
@@ -108,8 +118,7 @@ modeByw.addEventListener('click', function() {
         tablero.style.borderLeft='3px #5b5b5b solid';
     }
     containerPuntaje.classList.toggle('dark-mode');
-    modeByw.classList.toggle('dark-mode-button');
-    modeByw.textContent = this.classList.contains('dark-mode-button') ? '🌙' : '🌞';
+
 });
 
 btnJugar.addEventListener('click', function() {
@@ -117,56 +126,29 @@ btnJugar.addEventListener('click', function() {
     niveles.classList.toggle('visualize-block');
 });
 
+btnPuntajes.addEventListener('click', function() {
+    saludo.classList.toggle('visualize-block');
+    puntajesContainer.classList.toggle('visualize-block');
+});
+
 btnInstrucciones.addEventListener('click', function() {
     saludo.classList.toggle('visualize-block');
     instrucciones.classList.toggle('visualize-block');
 });
 
-btnSalir[0].addEventListener('click', function() {
-    niveles.classList.toggle('visualize-block');
+btnContacto.addEventListener('click', function() {
     saludo.classList.toggle('visualize-block');
+    contactoContainer.classList.toggle('visualize-block');
 });
 
-btnSalir[1].addEventListener('click', function() {
-    containerPuntaje.classList.toggle('visualize-block');
-    saludo.classList.toggle('visualize-block');
-});
+btnForm.addEventListener('click', function(e) {
+    e.preventDefault(); 
+    var nombre = document.querySelector('#nombre').value;
+    var email = document.querySelector('#email').value;
+    var mensaje = document.querySelector('#mensaje').value;
+    if (nombre === '' || email === '' || mensaje === '') {
+        alertFunction('error', 'Por favor, completa todos los campos.');
 
-btnSalir[2].addEventListener('click', function() {
-    instrucciones.classList.toggle('visualize-block');
-    saludo.classList.toggle('visualize-block');
-});
-
-exitCross.addEventListener('click', function() {
-    if (!juegoTerminado) {
-        pausarTemporizador();
-        var alert = alertFunction('salir', '¿Estás seguro de que quieres salir?');
-        if (!alert) return;
-    }
-    reiniciarJuego();
-});
-
-btnReiniciar.addEventListener('click', function() {
-    if (!juegoTerminado) {
-        pausarTemporizador();
-        var alert = alertFunction('salir', '¿Estás seguro de que quieres salir?');
-        if (!alert) return;
-    }
-    reiniciarJuego()
-
-});
-
-function reiniciarJuego() {
-    juegoTerminado = false;
-    niveles.classList.add('visualize-block');
-    tableroContainer.classList.remove('visualize-block');
-    tablero.innerHTML = '';
-    btnReiniciar.innerHTML = '😊';
-    temporizador.textContent = '000';
-    tiempo = 0;
-    contBanderas = 0;
-    detenerTemporizador();
-}
 
 btnNiveles[0].addEventListener('click', function() {
     crearTablero(6, 6, 7);
@@ -190,6 +172,60 @@ btnNiveles[2].addEventListener('click', function() {
     tableroContainer.classList.toggle('visualize-block');
 
 });
+
+
+btnSalir[0].addEventListener('click', function() {
+    niveles.classList.toggle('visualize-block');
+    saludo.classList.toggle('visualize-block');
+});
+
+btnSalir[1].addEventListener('click', function() {
+    puntajesContainer.classList.toggle('visualize-block');
+    saludo.classList.toggle('visualize-block');
+});
+
+btnSalir[2].addEventListener('click', function() {
+    instrucciones.classList.toggle('visualize-block');
+    saludo.classList.toggle('visualize-block');
+});
+
+btnSalir[3].addEventListener('click', function() {
+    contactoContainer.classList.toggle('visualize-block');
+    saludo.classList.toggle('visualize-block');
+});
+
+exitCross.addEventListener('click', function() {
+    if (!juegoTerminado) {
+        pausarTemporizador();
+        var alert = alertFunction('salir', '¿Estás seguro de que quieres salir?');
+        if (!alert) return;
+    }
+    reiniciarJuego();
+});
+
+btnReiniciar.addEventListener('click', function() {
+    if (!juegoTerminado) {
+        pausarTemporizador();
+        var alert = alertFunction('salir', '¿Estás seguro de que quieres salir?');
+        if (!alert) return;
+    }
+    reiniciarJuego()
+
+});
+
+
+
+function reiniciarJuego() {
+    juegoTerminado = false;
+    niveles.classList.add('visualize-block');
+    tableroContainer.classList.remove('visualize-block');
+    tablero.innerHTML = '';
+    btnReiniciar.innerHTML = '😊';
+    temporizador.textContent = '000';
+    tiempo = 0;
+    contBanderas = 0;
+    detenerTemporizador();
+}
 
 
 function iniciarTemporizador() {
