@@ -19,7 +19,7 @@ var contactoContainer = document.querySelector('.contacto-container');
 var formContacto = document.querySelector('#contacto-form');
 var btnForm= document.querySelector('#btn-form');
 var catPuntajesConatainer = document.querySelector('.cat-puntajes-container');
-var puntajesContainer = document.querySelector('#puntajes-container')
+var puntajesContainer = document.querySelector('.puntajes-container')
 var modalGuardado = document.querySelector('#modal-guardado');
 var tableroContainer = document.querySelector('.tablero-container');
 var tablero = document.querySelector('#tablero');
@@ -124,6 +124,8 @@ modeByw.addEventListener('click', function() {
     catPuntajesConatainer.classList.toggle('dark-mode');
     tableroContainer.classList.toggle('dark-mode');
     tablero.classList.toggle('dark-mode');
+    modalGuardado.classList.toggle('dark-mode')
+    puntajesContainer.classList.toggle('dark-mode')
     headTablero.classList.toggle('dark-mode');
     alertModal.classList.toggle('dark-mode');
     divModal = document.querySelectorAll('.btn-modal');
@@ -136,7 +138,6 @@ modeByw.addEventListener('click', function() {
         exitCross.style.borderBottom='3px #5b5b5b solid';
         tablero.style.borderLeft='3px #5b5b5b solid';
     }
-    containerPuntaje.classList.toggle('dark-mode');
 });
 
 btnJugar.addEventListener('click', function() {
@@ -230,12 +231,17 @@ btnSalir[1].addEventListener('click', function() {
     saludo.classList.toggle('visualize-block');
 });
 
-btnSalir[2].addEventListener('click', function() {
+btnSalir[2].addEventListener('click',function() {
+    puntajesContainer.classList.toggle('visualize-block')
+    saludo.classList.toggle('visualize-block');
+})
+
+btnSalir[3].addEventListener('click', function() {
     instrucciones.classList.toggle('visualize-block');
     saludo.classList.toggle('visualize-block');
 });
 
-btnSalir[3].addEventListener('click', function() {
+btnSalir[4].addEventListener('click', function() {
     contactoContainer.classList.toggle('visualize-block');
     saludo.classList.toggle('visualize-block');
 });
@@ -317,7 +323,6 @@ function verificarVictoria() {
 
 function guardarPuntaje( bands , time, level ) {
     var divModal = document.querySelectorAll('.modal-content');
-    tableroContainer.style.cursor ='in'
     var puntaje = {
         nombre:'',
         banderas: bands,
@@ -330,7 +335,8 @@ function guardarPuntaje( bands , time, level ) {
     var contNivel = document.createElement('p');
     var divNombre = document.createElement('div');
     var buttonGuardar = document.createElement('button');
-    buttonGuardar.textContent = 'Guardar Puntaje';
+    divModal[0].innerHTML='';
+    buttonGuardar.textContent = 'Guardar';
     buttonGuardar.classList.add('btn-juego', 'btn-modal');
     modalGuardado.classList.toggle('visualize-block');
     contBanderas.textContent = `Banderas: ${bands}`;
@@ -339,7 +345,8 @@ function guardarPuntaje( bands , time, level ) {
     contentPuntaje.appendChild(contBanderas);
     contentPuntaje.appendChild(contTiempo);
     contentPuntaje.appendChild(contNivel);
-    divNombre.innerHTML = `<label for="nombre-puntaje">Nombre:</label><input type="text" id="nombre-puntaje" name="nombre" required>`;
+    contentPuntaje.classList.add('guardar-puntaje')
+    divNombre.innerHTML = `<label for="nombre-puntaje">Nombre: </label><input type="text" id="nombre-puntaje" name="nombre" required>`;
     contentPuntaje.appendChild(divNombre);
     contentPuntaje.appendChild(buttonGuardar);
     divModal[0].appendChild(contentPuntaje);
@@ -353,26 +360,49 @@ function guardarPuntaje( bands , time, level ) {
             puntajes.push(puntaje);
             localStorage.setItem('puntajes', JSON.stringify(puntajes));
             modalGuardado.classList.remove('visualize-block');
+            contentPuntaje
             reiniciarJuego()
         }
     });
 }
 
 function mostrarPuntaje(type){
+    var puntajes = JSON.parse(localStorage.getItem('puntajes')) || [];
+    var puntajesContent = document.querySelector('.puntajes-content');
+    var topGlobal = puntajes
     catPuntajesConatainer.classList.toggle('visualize-block')
     puntajesContainer.classList.add('visualize-block')
-    switch (type) {
-        case 'Global':
-            
-        break;
-        case 'Niveles':
-
-        break;
-        default:
-            alertFunction('error','Algo salio mal :(')
-        break;
+    puntajesContent.innerHTML = '';
+    if (type === 'Global') {
+        let tabla = document.createElement('table');
+        topGlobal= puntajes.sort((a, b) => b.banderas - a.banderas ).slice(0, 5);
+        console.log(topGlobal)
+        tabla.innerHTML = `<tr><th>Nombre/</th><th>Banderas/</th><th>Tiempo/</th><th>Nivel</th></tr>`;
+        topGlobal.forEach(p => {
+            tabla.innerHTML += `<tr><td>${p.nombre}</td> - <td>${p.banderas}</td> - <td>${p.tiempo}</td> - <td>${p.nivel}</td></tr>`;
+        });
+        puntajesContent.appendChild(tabla);
+    } else if (type === 'Niveles') {
+        var niveles = ['Facil', 'Intermedio', 'Dificil'];
+        for (var i = 0; i < niveles.length; i++) {
+            var tabla = document.createElement('table');
+            var titulo = document.createElement('h3');
+            var divContent = document.createElement('div');
+            titulo.textContent= niveles[i];
+            tabla.innerHTML = `<tr><th>Nombre</th> - <th>Banderas</th> - <th>Tiempo</th></tr>`;
+            topGlobal.forEach(p => {
+                p.nivel==niveles[i]?tabla.innerHTML += `<tr><td>${p.nombre}</td> - <td>${p.banderas}</td> - <td>${p.tiempo}</td></tr>`:'';
+            });
+            divContent.appendChild(titulo)
+            divContent.appendChild(tabla)
+            puntajesContent.appendChild(divContent)
+        }
+        
+    } else {
+        alertFunction('error','Algo salio mal :(');
     }
 }
+
 
 function mostrarTodasLasBombas() {
     for (let i = 0; i < matrizJuego.length; i++) {

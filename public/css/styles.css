@@ -202,7 +202,7 @@ main {
     margin-bottom: 10px;
 }
 
-#puntajes-container{
+.puntajes-container{
     min-width: 400px;
     display: none;
     flex-direction: column;
@@ -214,7 +214,23 @@ main {
     padding: 25px 15px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     text-align: center;
-    max-width: 1000px;
+    max-width: 1200px;
+    border-right: 2px solid #7b7b7b;
+    border-bottom: 2px solid #7b7b7b;
+    border-top: 2px solid #cbcbcb;
+    border-left: 2px solid #cbcbcb;
+}
+.puntajes-content{
+    display: flex;
+}
+
+.guardar-puntaje{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 700;
+    padding-bottom: 15px;
 }
 
 .instructions-container {
@@ -234,6 +250,10 @@ main {
     font-size: 16px;
     color: #333;
     max-width: 700px;
+    border-right: 2px solid #7b7b7b;
+    border-bottom: 2px solid #7b7b7b;
+    border-top: 2px solid #cbcbcb;
+    border-left: 2px solid #cbcbcb;
 }
 .instructions-container>p{
 
@@ -434,6 +454,7 @@ button[id='reiniciar-juego']:hover {
     flex-direction: column;
     min-width: 300px;
     width: 70%;
+    border-radius: 15px;
     max-width: 500px;
     background: #b0b0b0;
     transition: all 0.3s ease-in-out;
@@ -442,6 +463,7 @@ button[id='reiniciar-juego']:hover {
     border-top: 2px solid #cbcbcb;
     border-left: 2px solid #cbcbcb;
 }
+
 
 .modal-alert{
     position:absolute;
