@@ -13,7 +13,6 @@ var btnContacto = document.querySelector('#btn-contacto');
 var btnPuntajes = document.querySelector('#btn-puntajes');
 var btnsPuntajes = document.querySelectorAll('.btn-puntaje');
 var btnReiniciar = document.querySelector('#reiniciar-juego');
-var btnReiniciar = document.querySelector('#reiniciar-juego');
 var instrucciones = document.querySelector('#instrucciones');
 var contactoContainer = document.querySelector('.contacto-container');
 var formContacto = document.querySelector('#contacto-form');
@@ -32,11 +31,9 @@ let visitado;
 let tiempo = 0;
 var contBanderas= 0;
 var nivelJuego = undefined
-var renTemporizador = null;
 let intervaloTemporizador = null;
 let temporizadorActivo = false;
 let primerClick = true;
-var refByw = false;
 let juegoTerminado = false;
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -96,7 +93,7 @@ function alertFunction(type, message) {
         }else if (type == 'victoria') {
             guardarPuntaje(contBanderas,tiempo,nivelJuego)
         }else if(type== 'perdiste'){
-            reiniciarJuego();
+            return;
         }
     });
     btnDenegar.addEventListener('click', function() {
@@ -542,7 +539,7 @@ function crearTablero(filas, columnas, bombas = 10) {
                     celda.classList.add('bomba');
                     detenerTemporizador();
                     mostrarTodasLasBombas();
-                    alertFunction('perdiste','¡Perdiste! Pisaste una bomba.');
+                    alertFunction('perdiste','¡Perdiste! Pisaste una bomba, apreta la "X" o el icono para salir.');
                     document.querySelectorAll('.celda').forEach(btn => btn.disabled = true);
                     juegoTerminado = true;
                 }else {
