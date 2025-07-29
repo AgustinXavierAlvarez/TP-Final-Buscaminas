@@ -194,7 +194,7 @@ main {
     border-left: 2px solid #cbcbcb;
 }
 
-.puntajes{
+.puntajes {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -202,7 +202,7 @@ main {
     margin-bottom: 10px;
 }
 
-.puntajes-container{
+.puntajes-container {
     min-width: 380px;
     display: none;
     flex-direction: column;
@@ -220,7 +220,7 @@ main {
     border-top: 2px solid #cbcbcb;
     border-left: 2px solid #cbcbcb;
 }
-.puntajes-content{
+.puntajes-content {
         margin: 0 10px;
         display: flex;
         overflow-x: scroll;
@@ -469,7 +469,6 @@ button[id='reiniciar-juego']:hover {
     border-left: 2px solid #cbcbcb;
 }
 
-
 .modal-alert{
     position:absolute;
     width: 400px;
@@ -486,6 +485,7 @@ button[id='reiniciar-juego']:hover {
     border-top: 2px solid #cbcbcb;
     border-left: 2px solid #cbcbcb;
 }
+
 .modal-content {
     display: flex;
     text-align: center;
@@ -494,6 +494,7 @@ button[id='reiniciar-juego']:hover {
     justify-content: center;
     gap: 10px;
 }
+
 .btns-modal {
   
     display: flex;
@@ -517,7 +518,6 @@ button[id='reiniciar-juego']:hover {
     transition: all 0.3s ease-in-out;
 }
 
-
 .dark-mode {
     background-color: #555;
     color: #fff !important;
@@ -535,12 +535,11 @@ button[id='reiniciar-juego']:hover {
     transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
 
 }
+
 .dark-mode-celda{
     background-color: #777;
     transition: background-color 0.3s ease-in-out, color 0.8s ease-in-out;
 }
-
-
 
 footer {
     text-align: center;

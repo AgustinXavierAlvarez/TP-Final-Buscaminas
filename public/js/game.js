@@ -48,7 +48,6 @@ function alertFunction(type, message) {
     divModal.innerHTML =`<div class="btns-modal"><button class="btn-juego btn-modal" id="btn-confirmar">Si</button><button class="btn-juego btn-modal" id="btn-denegar">No</button></div>`;
     alertModal.classList.add('visualize-block');
     divModal.classList.add('btns-modal');
-    console.log(modelContent);
     alertModal.appendChild(modelContent);
     modelContent.innerHTML = '';
     modelContent.appendChild(titulo);
@@ -91,7 +90,7 @@ function alertFunction(type, message) {
         }else if (type == 'error') {
             return;
         }else if (type == 'victoria') {
-            guardarPuntaje();
+            guardarPuntaje(contBanderas,tiempo,nivelJuego);
         }else if(type== 'perdiste'){
             return;
         }
@@ -266,7 +265,6 @@ btnReiniciar.addEventListener('click', function() {
         if (!alert) return;
     }
     reiniciarJuego()
-
 });
 
 function reiniciarJuego() {
@@ -304,13 +302,10 @@ function reanudarTemporizador() {
     }, 1000);
 }
 
-
 function detenerTemporizador() {
     clearInterval(intervaloTemporizador);
     temporizadorActivo = false;
 }
-
-
 
 function verificarVictoria() {
     let totalCeldas = matrizJuego.length * matrizJuego[0].length;
@@ -325,13 +320,13 @@ function verificarVictoria() {
     }
 }
 
-function guardarPuntaje() {
+function guardarPuntaje(bands, time , level) {
     var divModal = document.querySelectorAll('.modal-content');
     var puntaje = {
         nombre:'',
-        banderas: contBanderas,
-        tiempo: tiempo,
-        nivel: nivelJuego
+        banderas: bands,
+        tiempo: time,
+        nivel: level
     };
     var contentPuntaje = document.createElement('div');
     var contBanderas = document.createElement('p');
@@ -380,7 +375,6 @@ function mostrarPuntaje(type){
     if (type === 'Global') {
         let tabla = document.createElement('table');
         topGlobal= puntajes.sort((a, b) => b.banderas - a.banderas ).slice(0, 5);
-        console.log(topGlobal)
         tabla.innerHTML = `<tr><th>Nombre/</th><th>Banderas/</th><th>Tiempo/</th><th>Nivel</th></tr>`;
         topGlobal.forEach(p => {
             tabla.innerHTML += `<tr><td>${p.nombre}</td> - <td>${p.banderas}</td> - <td>${p.tiempo}</td> - <td>${p.nivel}</td></tr>`;
@@ -401,7 +395,6 @@ function mostrarPuntaje(type){
             divContent.appendChild(tabla)
             puntajesContent.appendChild(divContent)
         }
-        
     } else {
         alertFunction('error','Algo salio mal :(');
     }
@@ -476,8 +469,6 @@ function liberarEspacio(matriz, visitado, fila, columna) {
 
 function generarMatriz(filas, columnas, bombas) {
     let matriz = Array.from({length: filas}, () => Array(columnas).fill(0));
-    console.log(JSON.parse(JSON.stringify(matriz)));
-    console.log(matriz);
     let bombasColocadas = 0;
     while (bombasColocadas < bombas) {
         let f = Math.floor(Math.random() * filas);
@@ -555,7 +546,7 @@ function crearTablero(filas, columnas, bombas = 10) {
                 celda.classList.add('dark-mode-celda');
                 celda.style.borderBottom = '3px #3f3f3f solid';
                 celda.style.borderRight = '3px #3f3f3f solid';
-            }else {
+            } else {
                 celda.classList.remove('dark-mode-celda');
                 celda.style.borderBottom = '2px #5b5b5b solid';
                 celda.style.borderRight = '2px #5b5b5b solid';
