@@ -91,7 +91,7 @@ function alertFunction(type, message) {
         }else if (type == 'error') {
             return;
         }else if (type == 'victoria') {
-            guardarPuntaje(contBanderas,tiempo,nivelJuego)
+            guardarPuntaje();
         }else if(type== 'perdiste'){
             return;
         }
@@ -325,13 +325,13 @@ function verificarVictoria() {
     }
 }
 
-function guardarPuntaje( bands , time, level ) {
+function guardarPuntaje() {
     var divModal = document.querySelectorAll('.modal-content');
     var puntaje = {
         nombre:'',
-        banderas: bands,
-        tiempo: time,
-        nivel: level
+        banderas: contBanderas,
+        tiempo: tiempo,
+        nivel: nivelJuego
     };
     var contentPuntaje = document.createElement('div');
     var contBanderas = document.createElement('p');
@@ -442,8 +442,9 @@ function liberarEspacio(matriz, visitado, fila, columna) {
     const filas = matriz.length;
     const columnas = matriz[0].length;
     const direcciones = [
-        [-1, -1], [-1, 0], [-1, 1], [0, -1],
-        [0, 1], [1, -1], [1, 0], [1, 1]
+        [-1, -1], [-1, 0], [-1, 1], 
+        [0, -1],[0, 1],
+         [1, -1], [1, 0], [1, 1]
     ];
     let cola = [[fila, columna]];
     while (cola.length > 0) {
@@ -530,7 +531,7 @@ function crearTablero(filas, columnas, bombas = 10) {
                     primerClick = false;
                     iniciarTemporizador();
                     while (matrizJuego[i][j] === 'B') {
-                        matrizJuego = generarMatriz(matrizJuego.length, matrizJuego[0].length,matrizJuego.flat().filter(x => x === 'B').length);
+                        matrizJuego = generarMatriz(filas,columnas,bombas);
                     }
                 }
                 if (matrizJuego[i][j] === 'B') {
