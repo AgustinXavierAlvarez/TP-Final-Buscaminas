@@ -82,6 +82,11 @@ function alertFunction(type, message) {
         titulo.textContent = '¡¡Victoria!!';
         alertMessage.style.color = '#333';
     }
+    if (type == 'perdiste') {
+        titulo.textContent= 'Perdiste'+' 😞';
+        btnDenegar.style.display = 'none';    
+        btnConfirmar.textContent = 'Aceptar';
+    }
     btnConfirmar.addEventListener('click', function() {
         alertModal.classList.remove('visualize-block');
         if (type == 'salir') {
@@ -90,6 +95,8 @@ function alertFunction(type, message) {
             return;
         }else if (type == 'victoria') {
             guardarPuntaje(contBanderas,tiempo,nivelJuego)
+        }else if(type== 'perdiste'){
+            reiniciarJuego();
         }
     });
     btnDenegar.addEventListener('click', function() {
@@ -535,7 +542,7 @@ function crearTablero(filas, columnas, bombas = 10) {
                     celda.classList.add('bomba');
                     detenerTemporizador();
                     mostrarTodasLasBombas();
-                    alert('¡Perdiste! Pisaste una bomba.');
+                    alertFunction('perdiste','¡Perdiste! Pisaste una bomba.');
                     document.querySelectorAll('.celda').forEach(btn => btn.disabled = true);
                     juegoTerminado = true;
                 }else {

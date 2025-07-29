@@ -203,7 +203,7 @@ main {
 }
 
 .puntajes-container{
-    min-width: 400px;
+    min-width: 380px;
     display: none;
     flex-direction: column;
     justify-content: space-around;
@@ -221,7 +221,12 @@ main {
     border-left: 2px solid #cbcbcb;
 }
 .puntajes-content{
-    display: flex;
+        margin: 0 10px;
+        display: flex;
+        overflow-x: scroll;
+        width: 370px;
+        scrollbar-width: auto;
+
 }
 
 .guardar-puntaje{

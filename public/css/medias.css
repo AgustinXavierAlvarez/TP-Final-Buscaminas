@@ -3,7 +3,7 @@
     body{
         background-image: url("../img/Lumia\ old\ Microsoft\ Windows.jpg");
         background-size: cover;
-        background-position: center bottom;
+        background-position: bottom center;
     }
     header h1 {
         font-size: 2.5rem;
@@ -15,6 +15,9 @@
     .saludo p {
         font-size: 1.25rem;
     }
+    .puntajes-content{
+        width: 550px;
+    }
     footer{
         font-size: 10px;
     }
@@ -25,11 +28,18 @@
     body {
         background-image: url("../img/download.jpg");
         background-size:cover;
-        background-position: center;
+        background-position: top center;
     }
     .saludo {
         max-width: 600px;
         padding: 3rem 2.5rem;
+    }
+    .puntajes-content{
+        overflow-x: hidden;
+        width: 700px;
+        justify-content: center;
+        scrollbar-width: none;
+
     }
     header h1 {
         font-size: 3rem;
